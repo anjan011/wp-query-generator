@@ -14,7 +14,7 @@
 
                 ?>
 
-                <select id="post_type" name="post[post_type][]" style="1" class="chosen-multiple" multiple>
+                <select id="post_type" name="post[post_type][]" style="1" class="chosen" multiple>
                     <option value="any">Any Type</option>
                     <?php foreach ( $post_types as $type ): ?>
                         <option value="<?= $type ?>"

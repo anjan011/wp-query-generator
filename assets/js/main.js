@@ -258,6 +258,8 @@ _.mixin ({
     }
 });
 
+
+
 (function ($) {
 
     var $container = $ ('#' + meAnjanWqgData.html_ids.generator_container);
@@ -339,12 +341,7 @@ _.mixin ({
 
     });
 
-    $container.find ('.wqg-dropdown-multiple').each (function () {
-        $ (this).attr ({
-            multiple: 'multiple',
-            size    : 10
-        });
-    });
+
 
     var $tabButtonsList = $container.find ('.tab-buttons');
 
@@ -358,18 +355,23 @@ _.mixin ({
 
         var id = $(this).data('id');
 
+        var $tab = $('#' + id);
+
+        $tab.find('select').chosen('destroy');
+
+        $tab.find('select').chosen();
+        $tab.find('select[multiple]').chosen({
+            multiple : true
+        });
+
         $('.wqgCurrentTab').val(id);
 
 
     });
 
-    $container.find('select.chosen').chosen({
 
-    });
 
-    $container.find('select.chosen-multiple').chosen({
-        multiple: true
-    });
+
 
     $('#me-anjan-wqg-reset-data').on('click',function() {
 
@@ -380,6 +382,24 @@ _.mixin ({
         $('#me-anjan-wqg-action').val('reset-data');
 
         $form[0].submit();
+    });
+
+    $ (document).ready(function ($) {
+
+        $container.find ('.wqg-dropdown-multiple').each (function () {
+            $ (this).attr ({
+                multiple: 'multiple',
+                size    : 10
+            });
+        });
+
+        $container.find('select').chosen({
+
+        });
+
+        $container.find('select[multiple]').chosen({
+            multiple: true
+        });
     });
 
 }) (jQuery);

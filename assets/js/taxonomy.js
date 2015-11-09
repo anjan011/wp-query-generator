@@ -132,7 +132,7 @@
 
 
 
-        html.push('<label>');
+        /*html.push('<label>');
 
         html.push('<span>Values (One term per line)</span>');
 
@@ -140,10 +140,10 @@
 
 
 
-        html.push('</label>');
+        html.push('</label>');*/
 
         html.push('<label><span>Select Terms</span>');
-        html.push('<select data-placeholder="select one or more terms" name="tax[rules][' + key + '][term2][]" multiple class="taxonomy_terms">');
+        html.push('<select data-placeholder="select one or more terms" name="tax[rules][' + key + '][term][]" multiple class="taxonomy_terms">');
 
 
         html.push('</select>');
@@ -181,17 +181,28 @@
 
     function appendTaxonomyBlock(values) {
 
+        console.log(values);
+
         var block_id = 'taxonomy-block' + getBlockKey();
 
         $('.taxonomy-query-block').append(generateTaxonomyBlock(block_id,values));
 
-        $('#' + block_id).find('select').chosen({
+        var $block = $('#' + block_id);
+
+        $block.find('select').chosen({
             disable_search_threshold : 10,
             allow_single_deselect: true,
             search_contains : true
         });
 
-        $('#' + block_id).find('.taxonomies').trigger('change');
+
+
+
+        $block.data('tax', _.objValueAsString(values,'name'));
+        $block.data('terms', _.objValueAsArray(values,'term'));
+
+
+        $block.find('.taxonomies').trigger('change');
 
     }
 
@@ -207,6 +218,11 @@
         console.log (e.data);
 
         var $this = $(this);
+
+        var $block = $this.parents('.taxonomy-block');
+
+        var blockTax = $block.data('tax');
+        var blockTerms = $block.data('terms');
 
         var taxonomy = $.trim($this.val());
 
@@ -249,19 +265,36 @@
 
                     var t = res[i];
 
-                    html.push('<option value="' + t.value + '">' + t.label + ' (' + t.value + ')' +'</option>');
+                    html.push('<option value="' + t.value + '" ' + (blockTax == taxonomy && blockTerms.indexOf(t.value) >= 0 ? 'selected' : '') + '>' + t.label + ' (' + t.value + ')' +'</option>');
 
                 }
 
                 $termsSelect.html(html.join(''));
 
                 $termsSelect.trigger("chosen:updated");
+
+
+
+
             },
             error     : function () {
                 $this.prop('disabled',false);
             }
         });
 
+    });
+
+    /**
+     * taxonomy terms change events
+    **/
+
+    $taxQueryBlock.off('change','.taxonomy_terms').on('change','.taxonomy_terms',function(e) {
+        var $this = $(this);
+
+        var $block = $this.parents('.taxonomy-block');
+
+        $block.data('terms',$this.val());
+        $block.data('tax',$block.find('.taxonomies').val());
     });
 
     $taxQueryBlock.off('change','.taxonomy_field').on('change','.taxonomy_field',function(e) {
