@@ -1,4 +1,4 @@
-#anjan-me-wqg-container {
+#me-anjan-wqg-container {
 
   padding: 0;
 
@@ -14,17 +14,17 @@
     box-sizing: border-box;
   }
 
-  .wqg-ajax-error {
+  .me-anjan-wqg-ajax-error {
     color: red;
   }
 
-  h2.sub-heading {
+  h2.me-anjan-wqg-sub-heading {
     border-bottom: solid 1px #ccc;
     padding-bottom: 15px;
     margin-bottom: 15px;
   }
 
-  .output-block {
+  .me-anjan-wqg-output-block {
     margin-top: 20px;
     margin-bottom: 20px;
 
@@ -36,9 +36,9 @@
     }
   }
 
-  .tabpanel {
+  .me-anjan-wqg-tabpanel {
 
-    .tab-buttons {
+    .me-anjan-wqg-tab-buttons {
       width: 15%;
       float: left;
       padding: 0;
@@ -87,7 +87,7 @@
       }
     }
 
-    .tab-contents {
+    .me-anjan-wqg-tab-contents {
       width: 85%;
       float: left;
       background-color: #fff;
@@ -97,7 +97,7 @@
       position: relative;
       z-index: 1;
 
-      .tab-pane {
+      .me-anjan-wqg-tab-pane {
         display: none;
         padding: 5px 10px;
 
@@ -131,53 +131,69 @@
     }
 
     @media screen and (max-width: 449px) {
-      .tab-buttons {
+      .me-anjan-wqg-tab-buttons {
         width: 40%;
       }
 
-      .tab-contents {
+      .me-anjan-wqg-tab-contents {
         width: 60%;
       }
     }
 
     @media screen and (min-width: 450px) {
-      .tab-buttons {
+      .me-anjan-wqg-tab-buttons {
         width: 35%;
       }
 
-      .tab-contents {
+      .me-anjan-wqg-tab-contents {
         width: 65%;
       }
     }
 
     @media screen and (min-width: 768px) {
-      .tab-buttons {
+      .me-anjan-wqg-tab-buttons {
         width: 25%;
       }
 
-      .tab-contents {
+      .me-anjan-wqg-tab-contents {
         width: 75%;
       }
     }
 
     @media screen and (min-width: 1024px) {
-      .tab-buttons {
+      .me-anjan-wqg-tab-buttons {
         width: 15%;
       }
 
-      .tab-contents {
+      .me-anjan-wqg-tab-contents {
         width: 85%;
       }
     }
 
   }
 
-  .buttons-container {
+  .me-anjan-wqg-buttons-container {
     margin: 15px 10px;
   }
 }
 
-#anjan-me-wqg-form {
+.me-anjan-wqg-tabpanel.horizontal {
+  .me-anjan-wqg-tab-buttons {
+    width: 100% !important;
+    float: none;
+
+    li {
+      float: left;
+    }
+  }
+
+  .me-anjan-wqg-tab-contents {
+    width: 100% !important;
+    float: none;
+  }
+}
+
+#me-anjan-wqg-form {
 
   margin-bottom: 20px;
 
@@ -186,8 +202,6 @@
   }
 
   label {
-
-    display: block;
 
     strong {
 
@@ -250,7 +264,7 @@
     }
   }
 
-  .taxonomy-query-block {
+  .me-anjan-wqg-tax-query-block {
 
     .left,.right {
       float: left;
@@ -264,7 +278,7 @@
       }
     }
 
-    .taxonomy-block {
+    .me-anjan-wqg-tax-block {
       background-color: #fbd2cd;
       margin-bottom: 10px;
       padding: 5px;

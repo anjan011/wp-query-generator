@@ -14,6 +14,7 @@
         const AJAX_ACTION_AUTHOR_ID_AUTOCOMLETE = 'wqg_author_id_autocomplete';
         const AJAX_ACTION_AUTHOR_NAME_AUTOCOMLETE = 'wqg_author_name_autocomplete';
         const AJAX_ACTION_TAXONOMY_TERMS = 'me_anjan_wqg_taxonomy_terms';
+        const AJAX_ACTION_POST_LIST = 'me_anjan_wqg_post_list';
 
         /* Page slugs */
 
@@ -56,8 +57,10 @@
 
             add_filter( 'plugin_action_links_'.ME_ANJAN_PLUGIN_WQG_BASE_FILE_PATH, array( $this, 'add_action_links' ) );
 
-            add_action('wp_ajax_nopriv_me_anjan_wqg_taxonomy_terms', array($this,'__action_taxonomy_terms'));
             add_action('wp_ajax_me_anjan_wqg_taxonomy_terms', array($this,'__action_taxonomy_terms'));
+
+
+            add_action('wp_ajax_'.self::AJAX_ACTION_POST_LIST, array($this,'__action_post_list'));
 
         }
 
@@ -192,6 +195,7 @@
                 // Data for javascript
 
                 $jsData = array(
+                    'idPrefix' => $main->get_config('idPrefix'),
                     'ajax_url'        => array(
                         'form_generate'            => wqg_utils::wp_ajax_url(
                             self::AJAX_ACTION_GENERATE_CODE
@@ -207,11 +211,7 @@
                         ),
                     ),
                     'codeMirrorTheme' => self::CODEMIRROR_THEME,
-                    'html_ids' => array(
-                        'generator_container' => $main->get_config('html/ids/generator_container'),
-                        'generator_form' => $main->get_config('html/ids/generator_form'),
-                        'generator_output' => $main->get_config('html/ids/generator_output'),
-                    ),
+                    'html_ids' => $main->get_config('html/ids'),
                     'taxonomies' => wqg_taxonomies::get_taxonomies(),
                     'taxonomy_fields' => array(
                         array(
@@ -353,6 +353,13 @@
             exit();
         }
 
+        function __action_post_list() {
+
+            echo wqg_posts::posts_dropdown($_GET);
+
+            exit();
+
+        }
 
 
     }

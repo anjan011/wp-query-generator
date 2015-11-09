@@ -1,3 +1,4 @@
+<?php return false;?>
 <table class="form-table">
 
     <tr>
@@ -85,7 +86,7 @@
 
                 <?php
                     echo wqg_posts::posts_dropdown( array(
-                        'post_type'   => 'post',
+                        'post_type'   => 'page',
                         'nopaging'    => TRUE,
                         'empty_value' => array(
                             'label' => '~ Select ~',
@@ -94,11 +95,11 @@
                         'label_field' => 'post_title',
                         'value_field' => 'ID',
                         'attributes'  => array(
-                            'name'  => 'post[post_id]',
-                            'id'    => 'post_id',
+                            'name'  => 'post[page_id]',
+                            'id'    => 'page_id',
                             'class' => 'chosen',
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_id' ),
+                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/page_id' ),
                     ) );
                 ?>
             </label>
@@ -111,7 +112,7 @@
 
                 <?php
                     echo wqg_posts::posts_dropdown( array(
-                        'post_type'   => 'post',
+                        'post_type'   => 'page',
                         'nopaging'    => TRUE,
                         'empty_value' => array(
                             'label' => '~ Select ~',
@@ -120,11 +121,11 @@
                         'label_field' => 'post_name',
                         'value_field' => 'post_name',
                         'attributes'  => array(
-                            'name'  => 'post[post_slug]',
-                            'id'    => 'post_slug',
+                            'name'  => 'post[page_slug]',
+                            'id'    => 'page_slug',
                             'class' => 'chosen',
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_slug' ),
+                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/page_slug' ),
                     ) );
                 ?>
             </label>

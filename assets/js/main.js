@@ -262,20 +262,72 @@ _.mixin ({
 
 (function ($) {
 
-    var $container = $ ('#' + meAnjanWqgData.html_ids.generator_container);
+    var meAnjanWqgData = _.objValueAsObject(window,'meAnjanWqgData',{});
 
-    var $output = $ ('#' + meAnjanWqgData.html_ids.generator_output);
+    var idPrefix = $.trim(_.objValueAsString(meAnjanWqgData,'idPrefix'));
 
-    var $form = $ ('#' + meAnjanWqgData.html_ids.generator_form);
+    if('' == idPrefix) {
+        idPrefix = 'me-anjan-wqg-';
+    }
 
-    var codeMirror = CodeMirror.fromTextArea ($output[0], {
+    var html_ids = _.objValueAsObject(meAnjanWqgData,'html_ids',{});
+
+    /**
+     * Main container
+     *
+     * @type {*|HTMLElement}
+     */
+
+    var $mainContainer = $ ('#' + idPrefix + _.objValueAsString(html_ids,'generator_container'));
+
+    /**
+     * Tab Panel: Params
+     *
+     * @type {*|HTMLElement}
+     */
+
+    var $tabPanelParams = $ ('#' + idPrefix + _.objValueAsString(html_ids,'tabpanel_params'));
+
+    /**
+     * Params form
+     *
+     * @type {*|HTMLElement}
+     */
+
+    var $paramForm = $ ('#' + idPrefix + _.objValueAsString(html_ids,'generator_form'));
+
+    /**
+     * Output Block
+     *
+     * @type {*|HTMLElement}
+     */
+
+    var $outputBlock = $ ('#' + idPrefix + _.objValueAsString(html_ids,'generator_output'));
+
+    /**
+     * Reset Button
+     *
+     * @type {*|HTMLElement}
+     */
+
+    var $resetButton = $ ('#' + idPrefix + _.objValueAsString(html_ids,'reset_button'));
+
+    /**
+     * Init code mirror editor
+     */
+
+    var codeMirror = CodeMirror.fromTextArea ($outputBlock.find('textarea')[0], {
         mode       : "application/x-httpd-php",
         readOnly   : true,
-        theme      : meAnjanWqgData.codeMirrorTheme,
+        theme      : _.objValueAsString(meAnjanWqgData,'codeMirrorTheme'),
         lineNumbers: true
     });
 
-    $form.off ('submit').on ('submit', function (e) {
+    /**
+     * params form submission
+     */
+
+    $paramForm.off ('submit').on ('submit', function (e) {
 
         console.log(arguments);
 
@@ -283,41 +335,37 @@ _.mixin ({
 
         var formData = $form.serialize ();
 
-        if (_.isObject (meAnjanWqgData) && _.has (meAnjanWqgData, 'ajax_url')) {
+        var ajax_url = _.objValueAsObject(meAnjanWqgData,'ajax_url',{});
 
-            var ajax_url = _.isObject (meAnjanWqgData.ajax_url) ? meAnjanWqgData.ajax_url : {};
+        var form_generate_url = $.trim(_.objValueAsString(ajax_url,'form_generate',''));
 
-            var form_generate_url = _.has (ajax_url, 'form_generate') ? $.trim (ajax_url.form_generate) : '';
+        if (form_generate_url != '') {
 
-            if (form_generate_url != '') {
+            jQuery.ajax ({
+                url        : form_generate_url,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                type       : 'POST',
+                dataType   : 'html',
+                data       : formData,
+                beforeSend : function () {
 
-                jQuery.ajax ({
-                    url        : form_generate_url,
-                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                    type       : 'POST',
-                    dataType   : 'html',
-                    data       : formData,
-                    beforeSend : function () {
+                    $form.find ('input[type=submit],button[type=submit]').prop ('disabled', true);
 
-                        $form.find ('input[type=submit],button[type=submit]').prop ('disabled', true);
+                },
+                success    : function (html) {
 
-                    },
-                    success    : function (html) {
+                    $form.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
 
-                        $form.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
+                    codeMirror.setValue (html);
 
-                        codeMirror.setValue (html);
+                },
+                error      : function () {
 
-                    },
-                    error      : function () {
+                    $form.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
 
-                        $form.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
-
-                        $output.val ('Error generating code!');
-                    }
-                });
-
-            }
+                    $outputBlock.val ('Error generating code!');
+                }
+            });
 
         }
 
@@ -325,15 +373,21 @@ _.mixin ({
 
     });
 
-    $container.off ('click', 'a.tab-button').on ('click', 'a.tab-button', function (e) {
+    /**
+     * Logic for making up tab panel
+     */
+
+    $mainContainer.off ('click', '.me-anjan-wqg-tab-button').on ('click', '.me-anjan-wqg-tab-button', function (e) {
 
         var $link = $ (this);
 
-        $container.find ('li.tab-button-wrapper').removeClass ('active');
+        var $parent = $link.parents('.me-anjan-wqg-tabpanel');
 
-        $link.parent ('li.tab-button-wrapper').addClass ('active');
+        $parent.find ('li.me-anjan-wqg-tab-button-wrapper').removeClass ('active');
 
-        $container.find ('.tab-pane.active').removeClass ('active');
+        $link.parent ('li.me-anjan-wqg-tab-button-wrapper').addClass ('active');
+
+        $parent.find ('.me-anjan-wqg-tab-pane.active').removeClass ('active');
 
         $ ('#' + $link.attr ('href').substr (1)).addClass ('active');
 
@@ -341,65 +395,82 @@ _.mixin ({
 
     });
 
+    /**
+     * make sure that params tab panels are sof same height
+     */
 
-
-    var $tabButtonsList = $container.find ('.tab-buttons');
+    var $tabButtonsList = $tabPanelParams.find ('.me-anjan-wqg-tab-buttons');
 
     var tabButtonListHeight = $tabButtonsList.outerHeight ();
 
-    $container.find ('div.tab-pane').css ({
+    $tabPanelParams.find ('div.me-anjan-wqg-tab-pane').css ({
         'min-height': tabButtonListHeight + 'px'
     });
 
-    $container.on('click','.tab-button',function() {
-
-        var id = $(this).data('id');
-
-        var $tab = $('#' + id);
-
-        $tab.find('select').chosen('destroy');
-
-        $tab.find('select').chosen();
-        $tab.find('select[multiple]').chosen({
-            multiple : true
-        });
-
-        $('.wqgCurrentTab').val(id);
 
 
-    });
+    /**
+     * Force form submit on rest button click
+     */
 
-
-
-
-
-    $('#me-anjan-wqg-reset-data').on('click',function() {
+    $resetButton.on('click',function() {
 
         if(!confirm('Reset form data?')) {
             return false;
         }
 
-        $('#me-anjan-wqg-action').val('reset-data');
+        $('#' + idPrefix + 'action').val('reset-data');
 
-        $form[0].submit();
+        $paramForm[0].submit();
+    });
+
+    /**
+     * On post_type change perform ajax for fetching post entries
+     */
+
+    $mainContainer.on('change','#' + idPrefix + 'post-type',function() {
+
+        var $this = $(this);
+
+        var value = $this.val();
+
+        var $postsList = $('#' + idPrefix + 'post-id');
+
+        console.log(value);
+
+        console.log($postsList);
+
     });
 
     $ (document).ready(function ($) {
 
-        $container.find ('.wqg-dropdown-multiple').each (function () {
+        $mainContainer.find ('.wqg-dropdown-multiple').each (function () {
             $ (this).attr ({
                 multiple: 'multiple',
                 size    : 10
             });
         });
 
-        $container.find('select').chosen({
+        $mainContainer.find('select').chosen({
 
         });
 
-        $container.find('select[multiple]').chosen({
-            multiple: true
+        /**
+         * Special action to perform on params tab button clicks. We need to re-init chosen dropdowns
+         * else they would show up with 0px width
+         */
+
+        $tabPanelParams.on('click','.me-anjan-wqg-tab-button',function() {
+
+            var id = $(this).data('id');
+
+            jQuery ('#' + id + ' select').chosen('destroy').chosen();
+
+            $('.wqgCurrentTab').val(id);
+
+
         });
+
     });
 
 }) (jQuery);

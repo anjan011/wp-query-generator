@@ -212,9 +212,19 @@
 
                 if ( is_array( $post_type ) && count( $post_type ) > 0 ) {
 
-                    $post_type = array_unique( array_map( 'trim', $post_type ) );
+                    if(in_array('any',$post_type)) {
+                        $post_type = array('any');
+                    } else {
+                        $post_type = array_unique( array_map( 'trim', $post_type ) );
+                    }
 
-                    $code[] = wqg_utils::_l( $start_indent, "'post_type' => array(".join( ", ", $post_type )."),", 1 );
+                    if(count($post_type) > 1) {
+                        $code[] = wqg_utils::_l( $start_indent, "'post_type' => array('".join( "', '", $post_type )."'),", 1 );
+                    } else {
+                        $code[] = wqg_utils::_l( $start_indent, "'post_type' => '{$post_type[0]}',", 1 );
+                    }
+
+
 
                     $this->_args[ 'post_type' ] = $post_type;
                 }
@@ -239,58 +249,7 @@
                     $this->_args[ 'name' ] = $post_slug;
                 }
 
-                /*// name
 
-                $name = trim( wqg_utils::__ARRAY_VALUE( $data, 'name', '' ) );
-
-                if ( $name != '' ) {
-                    $code[] = wqg_utils::_l( $start_indent, "'cat_name' => '{$name}',", 1 );
-
-                    $this->_args[ 'cat_name' ] = $name;
-                }
-
-                // and
-
-                $and = wqg_utils::__ARRAY_VALUE( $data, 'and' );
-
-                if ( is_array( $and ) && count( $and ) > 0 ) {
-
-                    $and = array_unique( array_map( 'intval', $and ) );
-
-                    $code[] = wqg_utils::_l( $start_indent, "'category__and' => array(".join( ", ", $and )."),", 1 );
-
-                    $this->_args[ 'category__and' ] = $and;
-                }
-
-                // in
-
-                $in = wqg_utils::__ARRAY_VALUE( $data, 'in' );
-
-                if ( is_array( $in ) && count( $in ) > 0 ) {
-
-                    $in = array_unique( array_map( 'intval', $in ) );
-
-                    $code[] = wqg_utils::_l( $start_indent, "'category__in' => array(".join( ", ", $in )."),", 1 );
-
-                    $this->_args[ 'category__in' ] = $in;
-                }
-
-                // not in
-
-                $not_in = wqg_utils::__ARRAY_VALUE( $data, 'not_in' );
-
-                if ( is_array( $not_in ) && count( $not_in ) > 0 ) {
-
-                    $not_in = array_unique( array_map( 'intval', $not_in ) );
-
-                    $code[] = wqg_utils::_l( $start_indent, "'category__not_in' => array(".join( ", ", $not_in )."),", 1 );
-
-                    $this->_args[ 'category__not_in' ] = $not_in;
-                }
-
-                if ( count( $code ) > 0 ) {
-                    $code[] = wqg_utils::_l( 0, '', 1 );
-                }*/
 
             }
 
@@ -513,13 +472,18 @@
 
                 $non_empty_rules_count = 0;
 
-                foreach($rules as $r) {
-                    $term = trim($r['term']);
+                if(is_array($rules) && count($rules) > 0) {
 
-                    if($term != '') {
-                        $non_empty_rules_count += 1;
+                    foreach($rules as $r) {
+                        $term = wqg_utils::array_value_as_array($r,'term',array());
+
+                        if(!empty($term)) {
+                            $non_empty_rules_count += 1;
+                        }
                     }
                 }
+
+
 
                 if ( count( $rules ) > 0 ) {
 
@@ -546,14 +510,12 @@
                             $name = wqg_utils::array_value_as_string($r,'name','','trim');
                             $field = wqg_utils::array_value_as_string($r,'field','','trim');
                             $operator = wqg_utils::array_value_as_string($r,'operator','','trim');
-                            $term = wqg_utils::array_value_as_string($r,'term','','trim');
+                            $term = wqg_utils::array_value_as_array($r,'term',array());
                             $include_children = wqg_utils::array_value_as_int($r,'include_children',0);
 
-                            if($term == '') {
+                            if(empty($term)) {
                                 continue;
                             }
-
-                            $term = explode(PHP_EOL,$term);
 
                             $code[] = wqg_utils::_l( $start_indent + 1, "array(", 1 );
 

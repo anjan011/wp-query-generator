@@ -1,67 +1,31 @@
 <?php
 
-    echo wqg_tags::tags_dropdown(array(
-        'label_field' => 'name',
-        'value_field' => 'slug',
-        'attributes' => array(
-            'name' => 'tag[slug]',
-            /*'multiple' => 'multiple',
-            'size' => 10*/
-        ),
-        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'tag/slug')
-    ));
+    // Query Args
+    $args = array(
 
-    echo wqg_tags::tags_dropdown(array(
-        'label_field' => 'name',
-        'value_field' => 'term_id',
-        'attributes' => array(
-            'name' => 'tag[id]',
-            /*'multiple' => 'multiple',
-            'size' => 10*/
-        ),
-        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'tag/id')
-    ));
+       'post_type' => array('page'),
+        'p' => @$_GET['post_id'],
+    );
 
-    echo wqg_tags::tags_dropdown(array(
-        'label_field' => 'name',
-        'value_field' => 'term_id',
-        'attributes' => array(
-            'name' => 'tag[and][]',
-            'multiple' => 'multiple',
-            'size' => 10
-        ),
-        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'tag/and')
-    ));
+    // The Query
+    $the_query = new WP_Query( $args );
 
-    echo wqg_tags::tags_dropdown(array(
-        'label_field' => 'name',
-        'value_field' => 'term_id',
-        'attributes' => array(
-            'name' => 'tag[in][]',
-            'multiple' => 'multiple',
-            'size' => 10
-        ),
-        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'tag/in')
-    ));
+    // The Loop
+    if ( $the_query->have_posts() ) {
 
-    echo wqg_tags::tags_dropdown(array(
-        'label_field' => 'name',
-        'value_field' => 'term_id',
-        'attributes' => array(
-            'name' => 'tag[not_in][]',
-            'multiple' => 'multiple',
-            'size' => 10
-        ),
-        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'tag/not_in')
-    ));
+        echo '<div style="clear: both;"></div>';
+        echo '<pre style="border: solid 1px #ccc;box-shadow: 2px 2px 2px #999;padding: 10px;border-radius: 10px;box-sizing: border-box;margin: 10px;word-wrap: break-word;">';
+        print_r($the_query->get_posts());
+        echo '</pre>';
+        echo '<div style="clear: both;"></div>';
 
-    echo wqg_tags::tags_dropdown(array(
-        'label_field' => 'name',
-        'value_field' => 'term_id',
-        'attributes' => array(
-            'name' => 'tag[and][]',
-            'multiple' => 'multiple',
-            'size' => 10
-        ),
-        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'tag/and')
-    ));
+    } else {
+
+        // no posts found
+
+    }
+
+    // Restore original Post Data
+    wp_reset_postdata();
+
+?>

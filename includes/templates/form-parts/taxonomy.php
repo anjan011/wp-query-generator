@@ -25,7 +25,7 @@
 
     <tr>
         <td>
-            <div class="taxonomy-query-block"></div>
+            <div class="me-anjan-wqg-tax-query-block"></div>
 
             <div style="clear: both;"></div>
 

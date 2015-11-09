@@ -16,17 +16,17 @@
          * @return array
          */
 
-        public static function get_posts($params = array()) {
+        public static function get_posts( $params = array() ) {
 
-            $params = is_array($params) ? $params : array();
+            $params = is_array( $params ) ? $params : array();
 
-            $params['post_type'] = wqg_utils::array_value_as_string($params,'post_type','post','trim');
-            $params['order'] = wqg_utils::array_value_as_string($params,'order','asc','trim');
-            $params['orderby'] = wqg_utils::array_value_as_string($params,'orderby','title','trim');
-            $params['nopaging'] = wqg_utils::__ARRAY_VALUE($params,'nopaging',true);
-            $params['post_parent'] = wqg_utils::array_value_as_int($params,'post_parent',0);
+            $params[ 'post_type' ] = wqg_utils::array_value_as_array( $params, 'post_type', array( 'post' ) );
+            $params[ 'order' ] = wqg_utils::array_value_as_string( $params, 'order', 'asc', 'trim' );
+            $params[ 'orderby' ] = wqg_utils::array_value_as_string( $params, 'orderby', 'title', 'trim' );
+            $params[ 'nopaging' ] = wqg_utils::__ARRAY_VALUE( $params, 'nopaging', TRUE );
+            $params[ 'post_parent' ] = wqg_utils::array_value_as_int( $params, 'post_parent', 0 );
 
-            $q = new WP_Query($params);
+            $q = new WP_Query( $params );
 
             $posts = $q->get_posts();
 
@@ -42,55 +42,82 @@
          * @return string
          */
 
-        public static function posts_dropdown($params = array()) {
+        public static function posts_dropdown( $params = array() ) {
 
-            $attributes = wqg_utils::__ARRAY_VALUE($params,'attributes',array());
+            $params[ 'post_type' ] = wqg_utils::array_value_as_array( $params, 'post_type', array( 'post' ) );
 
-            $selected = wqg_utils::__ARRAY_VALUE($params,'selected','');
+            if ( in_array( 'any', $params[ 'post_type' ] ) ) {
+                $params[ 'post_type' ] = array( 'any' );
+            }
+
+            $attributes = wqg_utils::__ARRAY_VALUE( $params, 'attributes', array() );
+
+            $selected = wqg_utils::__ARRAY_VALUE( $params, 'selected', '' );
+
+            $options_only = isset($params[ 'options_only' ]) && $params[ 'options_only' ];
+
+            $html = '';
+
+            if ( !$options_only ) {
 
 
+                $html .= "<select";
 
-            $html = "<select";
+                if ( is_array( $attributes ) && count( $attributes ) > 0 ) {
 
-            if(is_array($attributes) && count($attributes) > 0) {
+                    foreach ( $attributes as $key => $value ) {
 
-                foreach($attributes as $key => $value) {
+                        $html .= " {$key}='".(string) $value."'";
 
-                    $html .= " {$key}='".(string)$value."'";
+                    }
 
                 }
 
+                $html .= '>';
             }
 
-            $html .= '>';
+            $empty_value = wqg_utils::__ARRAY_VALUE( $params, 'empty_value', FALSE );
 
-            $empty_value = wqg_utils::__ARRAY_VALUE($params,'empty_value',false);
-
-            if(is_array($empty_value) && isset($empty_value['label']) && isset($empty_value['value'])) {
+            if ( is_array( $empty_value ) && isset($empty_value[ 'label' ]) && isset($empty_value[ 'value' ]) ) {
 
                 $html .= "<option value='{$empty_value['value']}'>{$empty_value['label']}</option>";
 
             }
 
-            $posts = self::get_posts($params);
+            foreach ( $params[ 'post_type' ] as $post_type ) {
 
-            if(is_array($posts) && count($posts) > 0) {
+                $html .= '<optgroup label="'.$post_type.'">';
 
-                foreach($posts as $p) {
+                $params[ 'post_type' ] = array( $post_type );
 
-                    $html .= self::generate_post_option(array(
-                        'post' => $p,
-                        'selected' => $selected,
-                        'label_field' => wqg_utils::__ARRAY_VALUE($params,'label_field','post_title'),
-                        'value_field' => wqg_utils::__ARRAY_VALUE($params,'value_field','ID'),
-                        'indent' => 0
-                    ));
+                $posts = self::get_posts( $params );
+
+                if ( is_array( $posts ) && count( $posts ) > 0 ) {
+
+                    foreach ( $posts as $p ) {
+
+                        $html .= self::generate_post_option( array(
+                            'post_type'   => array( $post_type ),
+                            'post'        => $p,
+                            'selected'    => $selected,
+                            'label_field' => wqg_utils::__ARRAY_VALUE( $params, 'label_field', 'post_title' ),
+                            'value_field' => wqg_utils::__ARRAY_VALUE( $params, 'value_field', 'ID' ),
+                            'indent'      => 0,
+                        ) );
+
+                    }
 
                 }
 
+                $html .= '</optgroup>';
+
             }
 
-            $html .= '</select>';
+
+            if ( !$options_only ) {
+                $html .= '</select>';
+            }
+
 
             return $html;
 
@@ -104,57 +131,57 @@
          * @return bool|string
          */
 
-        public static function generate_post_option( $params = array()) {
+        public static function generate_post_option( $params = array() ) {
 
-            $post = wqg_utils::__ARRAY_VALUE($params,'post',false);
+            $post = wqg_utils::__ARRAY_VALUE( $params, 'post', FALSE );
 
-            if(!is_object($post) || !($post instanceof WP_Post)) {
-                return false;
+            if ( !is_object( $post ) || !($post instanceof WP_Post) ) {
+                return FALSE;
             }
 
 
+            $label_field = wqg_utils::__ARRAY_VALUE( $params, 'label_field', 'post_title' );
+            $value_field = wqg_utils::__ARRAY_VALUE( $params, 'value_field', 'ID' );
 
-            $label_field = wqg_utils::__ARRAY_VALUE($params,'label_field','post_title');
-            $value_field = wqg_utils::__ARRAY_VALUE($params,'value_field','ID');
-
-            $indent = (int)wqg_utils::__ARRAY_VALUE($params,'indent',0);
+            $indent = (int) wqg_utils::__ARRAY_VALUE( $params, 'indent', 0 );
 
             $label = isset($post->$label_field) ? $post->$label_field : '';
             $value = isset($post->$value_field) ? $post->$value_field : '';
 
-            $label = str_repeat('-',$indent).$label;
+            $label = str_repeat( '-', $indent ).$label;
 
             /* Selected attr */
 
             $selected_attr = '';
 
-            $selected = wqg_utils::__ARRAY_VALUE($params,'selected','');
+            $selected = wqg_utils::__ARRAY_VALUE( $params, 'selected', '' );
 
-            if(is_array($selected) && in_array($value,$selected)) {
+            if ( is_array( $selected ) && in_array( $value, $selected ) ) {
                 $selected_attr = ' selected';
-            } else if($selected == $value) {
+            }
+            else if ( $selected == $value ) {
                 $selected_attr = ' selected';
             }
 
             $html = "<option value='{$value}'{$selected_attr}>{$label}</option>";
 
-            $params['post_parent'] = $post->ID;
+            $params[ 'post_parent' ] = $post->ID;
 
-            $child_posts = self::get_posts($params);
+            $child_posts = self::get_posts( $params );
 
             /* Child categories */
 
-            if(is_array($child_posts) && count($child_posts) > 0) {
+            if ( is_array( $child_posts ) && count( $child_posts ) > 0 ) {
 
-                foreach($child_posts as $p) {
+                foreach ( $child_posts as $p ) {
 
                     $newParam = $params;
 
-                    $newParam['indent'] = $indent + 1;
+                    $newParam[ 'indent' ] = $indent + 1;
 
-                    $newParam['post'] = $p;
+                    $newParam[ 'post' ] = $p;
 
-                    $html .= self::generate_post_option($newParam);
+                    $html .= self::generate_post_option( $newParam );
 
                 }
 
