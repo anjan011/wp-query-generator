@@ -30,6 +30,12 @@
 
         }
 
+        public function getGeneratedArgs() {
+
+            return $this->_args;
+
+        }
+
 
         /**
          * Prepare data so it conforms to expected form

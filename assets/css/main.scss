@@ -2,9 +2,6 @@
 
   padding: 0;
 
-  margin-right: auto;
-  margin-left: auto;
-
   div {
     box-sizing: border-box;
   }
@@ -19,177 +16,197 @@
   }
 
   h2.me-anjan-wqg-sub-heading {
-    border-bottom: solid 1px #ccc;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    font-size: 1em;
+    border: none;
+    padding: 0 0 15px;
+    margin: 0 0 15px;
   }
 
   .me-anjan-wqg-output-block {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 
     .CodeMirror {
-
       width: 100%;
-      min-width: 600px;
       height: auto !important;
     }
   }
 
-  .me-anjan-wqg-tabpanel {
 
-    .me-anjan-wqg-tab-buttons {
-      width: 15%;
-      float: left;
-      padding: 0;
-      margin: 0;
-      position: relative;
-      z-index: 2;
-      box-sizing: border-box;
-
-      li {
-        padding: 0;
-        margin: 0;
-        position: relative;
-        z-index: 3;
-        border-right: solid 1px #CECACA;
-
-        a {
-          background-color: #f1f1f1;
-          display: block;
-          padding: 5px 10px;
-          color: #000;
-          text-decoration: none;
-          outline: none;
-          box-shadow: none;
-        }
-
-        &.active {
-
-          position: relative;
-          z-index: 3;
-
-          border: solid 1px #CECACA;
-          border-right: solid 1px #fff;
-
-          border-top-left-radius: 5px;
-          border-bottom-left-radius: 5px;
-
-          a {
-            background-color: #fff;
-            color: #333;
-            font-weight: bold;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-
-          }
-        }
-      }
-    }
-
-    .me-anjan-wqg-tab-contents {
-      width: 85%;
-      float: left;
-      background-color: #fff;
-      box-sizing: border-box;
-      border: solid 1px #CECACA;
-      margin-left: -1px;
-      position: relative;
-      z-index: 1;
-
-      .me-anjan-wqg-tab-pane {
-        display: none;
-        padding: 5px 10px;
-
-        table.form-table {
-          margin-top : 0;
-
-          td {
-            padding: 10px 0;
-
-            &:first-child {
-              padding-top: 0;
-            }
-
-            label {
-              line-height: 2em;
-            }
-
-          }
-        }
-
-        &.active {
-          display: block;
-        }
-
-        .panel-header {
-          margin-top: 0;
-          margin-bottom: 0;
-        }
-      }
-
-    }
-
-    @media screen and (max-width: 449px) {
-      .me-anjan-wqg-tab-buttons {
-        width: 40%;
-      }
-
-      .me-anjan-wqg-tab-contents {
-        width: 60%;
-      }
-    }
-
-    @media screen and (min-width: 450px) {
-      .me-anjan-wqg-tab-buttons {
-        width: 35%;
-      }
-
-      .me-anjan-wqg-tab-contents {
-        width: 65%;
-      }
-    }
-
-    @media screen and (min-width: 768px) {
-      .me-anjan-wqg-tab-buttons {
-        width: 25%;
-      }
-
-      .me-anjan-wqg-tab-contents {
-        width: 75%;
-      }
-    }
-
-    @media screen and (min-width: 1024px) {
-      .me-anjan-wqg-tab-buttons {
-        width: 15%;
-      }
-
-      .me-anjan-wqg-tab-contents {
-        width: 85%;
-      }
-    }
-
-  }
 
   .me-anjan-wqg-buttons-container {
     margin: 15px 10px;
   }
 }
 
-.me-anjan-wqg-tabpanel.horizontal {
-  .me-anjan-wqg-tab-buttons {
-    width: 100% !important;
-    float: none;
+.me-anjan-wqg-tabpanel {
+
+  & > .me-anjan-wqg-tab-buttons {
+    width: 15%;
+    float: left;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
 
     li {
-      float: left;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      z-index: 3;
+      border-right: solid 1px #CECACA;
+
+      a {
+        background-color: #f1f1f1;
+        display: block;
+        padding: 5px 10px;
+        color: #000;
+        text-decoration: none;
+        outline: none;
+        box-shadow: none;
+      }
+
+      &.active {
+
+        position: relative;
+        z-index: 3;
+
+        border: solid 1px #CECACA;
+        border-right: solid 1px #fff;
+
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+        a {
+          background-color: #fff;
+          color: #333;
+          font-weight: bold;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+
+        }
+      }
     }
   }
 
-  .me-anjan-wqg-tab-contents {
+  & > .me-anjan-wqg-tab-contents {
+    width: 85%;
+    float: left;
+    background-color: #fff;
+    box-sizing: border-box;
+    border: solid 1px #CECACA;
+    margin-left: -1px;
+    position: relative;
+    z-index: 1;
+
+    & > .me-anjan-wqg-tab-pane {
+      display: none;
+      padding: 5px 10px;
+
+      table.form-table {
+        margin-top : 0;
+
+        td {
+          padding: 10px 0;
+
+          &:first-child {
+            padding-top: 0;
+          }
+
+          label {
+            line-height: 2em;
+          }
+
+        }
+      }
+
+      &.active {
+        display: block;
+      }
+
+      .panel-header {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+
+  }
+
+  @media screen and (max-width: 449px) {
+    .me-anjan-wqg-tab-buttons {
+      width: 40%;
+    }
+
+    .me-anjan-wqg-tab-contents {
+      width: 60%;
+    }
+  }
+
+  @media screen and (min-width: 450px) {
+    .me-anjan-wqg-tab-buttons {
+      width: 35%;
+    }
+
+    .me-anjan-wqg-tab-contents {
+      width: 65%;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .me-anjan-wqg-tab-buttons {
+      width: 25%;
+    }
+
+    .me-anjan-wqg-tab-contents {
+      width: 75%;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .me-anjan-wqg-tab-buttons {
+      width: 15%;
+    }
+
+    .me-anjan-wqg-tab-contents {
+      width: 85%;
+    }
+  }
+
+}
+
+.me-anjan-wqg-tabpanel.horizontal {
+
+  & > .me-anjan-wqg-tab-buttons {
     width: 100% !important;
-    float: none;
+    float: none !important;
+
+    margin-left: 20px;
+    margin-bottom: -1px;
+
+    & > li {
+      float: left;
+
+      border: none 0;
+
+      &.active {
+
+        border: solid 1px #CECACA;
+        border-bottom: solid 1px #fff;
+        border-radius: 0;
+
+
+
+        a {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+
+  & > .me-anjan-wqg-tab-contents {
+    width: 100% !important;
+    float: none !important;
   }
 }
 
@@ -319,8 +336,6 @@
         margin-bottom: 5px;
       }
 
-
-
     }
   }
 
@@ -347,4 +362,19 @@
     }
 
   }
+}
+
+.clearfix {
+  overflow: auto;
+  zoom: 1;
+}
+
+.me-anjan-wqg-code-help {
+  color: #f80;
+  font-size: 1.2em;
+  margin-left: 39px;
+}
+
+.syntaxhighlighter {
+  font-size: 1.2em !important;
 }

@@ -86,8 +86,14 @@
             if ( $hook == 'tools_page_'.self::GENERATOR_PAGE_SLUG ) {
 
 
-                wp_enqueue_style( 'wqg_codemirror_style', ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/lib/codemirror.css' );
-                wp_enqueue_style( 'wqg_codemirror_theme_'.self::CODEMIRROR_THEME, ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/theme/'.self::CODEMIRROR_THEME.'.css', array( 'wqg_codemirror_style' ) );
+                wp_enqueue_style(
+                    'wqg_chosen',
+                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/chosen/chosen.min.css'
+                );
+
+                wp_enqueue_style('me_anjan_wqg_sh_core',ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/SyntaxHighlighter/styles/shCore.css');
+                wp_enqueue_style('me_anjan_wqg_sh_core_default',ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/SyntaxHighlighter/styles/shCoreDefault.css');
+                wp_enqueue_style('me_anjan_wqg_sh_core_default',ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/SyntaxHighlighter/styles/shThemeDefault.css');
 
                 wp_enqueue_style( 'wqg_main_style', ME_ANJAN_PLUGIN_WQG_URL.'assets/css/main.css' );
 
@@ -104,10 +110,7 @@
                 wp_enqueue_script( 'underscore' );
                 wp_enqueue_script( 'jquery' );
 
-                wp_enqueue_style(
-                    'wqg_chosen',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/chosen/chosen.min.css'
-                );
+
 
                 wp_enqueue_script(
                     'wqg_chosen',
@@ -117,63 +120,21 @@
                     TRUE
                 );
 
-
                 wp_enqueue_script(
-                    'wqg_codemirror',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/lib/codemirror.js',
+                    'me_anjan_wqg_sh_core',
+                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/SyntaxHighlighter/scripts/shCore.js',
                     array( 'jquery' ),
                     '1.0',
                     TRUE
                 );
 
                 wp_enqueue_script(
-                    'wqg_codemirror_mode_php',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/mode/php/php.js',
-                    array( 'wqg_codemirror' ),
+                    'me_anjan_wqg_sh_brush_php',
+                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/SyntaxHighlighter/scripts/shBrushPhp.js',
+                    array( 'jquery' ),
                     '1.0',
                     TRUE
                 );
-
-                wp_enqueue_script(
-                    'wqg_codemirror_mode_xml',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/mode/xml/xml.js',
-                    array( 'wqg_codemirror' ),
-                    '1.0',
-                    TRUE
-                );
-
-                wp_enqueue_script(
-                    'wqg_codemirror_mode_clike',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/mode/clike/clike.js',
-                    array( 'wqg_codemirror' ),
-                    '1.0',
-                    TRUE
-                );
-
-                wp_enqueue_script(
-                    'wqg_codemirror_mode_htmlmixed',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/mode/htmlmixed/htmlmixed.js',
-                    array( 'wqg_codemirror' ),
-                    '1.0',
-                    TRUE
-                );
-
-                wp_enqueue_script(
-                    'wqg_codemirror_mode_javascript',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/mode/javascript/javascript.js',
-                    array( 'wqg_codemirror' ),
-                    '1.0',
-                    TRUE
-                );
-
-                wp_enqueue_script(
-                    'wqg_codemirror_mode_css',
-                    ME_ANJAN_PLUGIN_WQG_URL.'assets/js/lib/codemirror-5.6/mode/css/css.js',
-                    array( 'wqg_codemirror' ),
-                    '1.0',
-                    TRUE
-                );
-
 
 
                 wp_enqueue_script(

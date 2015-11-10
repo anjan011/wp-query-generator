@@ -316,12 +316,12 @@ _.mixin ({
      * Init code mirror editor
      */
 
-    var codeMirror = CodeMirror.fromTextArea ($outputBlock.find('textarea')[0], {
+    /*var codeMirror = CodeMirror.fromTextArea ($outputBlock.find('textarea')[0], {
         mode       : "application/x-httpd-php",
         readOnly   : true,
         theme      : _.objValueAsString(meAnjanWqgData,'codeMirrorTheme'),
         lineNumbers: true
-    });
+    });*/
 
     /**
      * params form submission
@@ -356,7 +356,13 @@ _.mixin ({
 
                     $form.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
 
-                    codeMirror.setValue (html);
+                    html = html.replace('<','&lt;').replace('>','&gt;');
+
+                    $outputBlock.find('.me-anjan-wqg-sh-code').empty().html('<pre class="brush: php">' + html + '</pre>');
+
+                    SyntaxHighlighter.highlight();
+
+                    $('[href=#me-anjan-wqg-tab-button-code]').click();
 
                 },
                 error      : function () {
@@ -373,25 +379,33 @@ _.mixin ({
 
     });
 
+    var $tabPanels = $mainContainer.find('.me-anjan-wqg-tabpanel');
+
     /**
      * Logic for making up tab panel
      */
 
-    $mainContainer.off ('click', '.me-anjan-wqg-tab-button').on ('click', '.me-anjan-wqg-tab-button', function (e) {
+    $tabPanels.each(function() {
 
-        var $link = $ (this);
+        var $tb = $(this);
 
-        var $parent = $link.parents('.me-anjan-wqg-tabpanel');
+        $tb
+            .off ('click', '> .me-anjan-wqg-tab-buttons > .me-anjan-wqg-tab-button-wrapper > .me-anjan-wqg-tab-button')
+            .on ('click', '> .me-anjan-wqg-tab-buttons > .me-anjan-wqg-tab-button-wrapper > .me-anjan-wqg-tab-button', function () {
 
-        $parent.find ('li.me-anjan-wqg-tab-button-wrapper').removeClass ('active');
+                var $link = $ (this);
 
-        $link.parent ('li.me-anjan-wqg-tab-button-wrapper').addClass ('active');
+                $tb.find ('> .me-anjan-wqg-tab-buttons > .me-anjan-wqg-tab-button-wrapper').removeClass ('active');
 
-        $parent.find ('.me-anjan-wqg-tab-pane.active').removeClass ('active');
+                $link.parent ().addClass ('active');
 
-        $ ('#' + $link.attr ('href').substr (1)).addClass ('active');
+                $tb.find ('> .me-anjan-wqg-tab-contents > .me-anjan-wqg-tab-pane.active').removeClass ('active');
 
-        return false;
+                $ ('#' + $link.attr ('href').substr (1)).addClass ('active');
+
+                return false;
+
+            });
 
     });
 
@@ -467,9 +481,10 @@ _.mixin ({
             jQuery ('#' + id + ' select').chosen('destroy').chosen();
 
             $('.wqgCurrentTab').val(id);
-
-
         });
+
+
+        SyntaxHighlighter.all();
 
     });
 
