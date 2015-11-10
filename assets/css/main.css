@@ -122,7 +122,8 @@
   float: none !important; }
 
 #me-anjan-wqg-form {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  margin-top: 10px; }
   @media screen and (max-width: 449px) {
     #me-anjan-wqg-form {
       padding: 5px; } }
@@ -214,11 +215,20 @@
   zoom: 1; }
 
 .me-anjan-wqg-code-help {
-  color: #f80;
   font-size: 1.2em;
-  margin-left: 39px; }
+  padding: 5px;
+  background-color: #ffa033;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #fff; }
 
 .syntaxhighlighter {
   font-size: 1.2em !important; }
+
+#me-anjan-wqg-preview-box {
+  margin-top: 10px; }
+
+.me-anjan-wqg-error {
+  color: red; }
 
 /*# sourceMappingURL=main.css.map */

@@ -143,7 +143,7 @@
                                 <input type="hidden" class="wqgCurrentTab" name="currentTab" value="<?= wqg_utils::__ARRAY_VALUE($wqgData,'currentTab')?>" />
 
                                 <button type="submit" class="button-primary">Save &amp; Generate</button>
-                                <button type="submit" class="button-secondary">Preview Data</button>
+                                <button type="button" id="me-anjan-wqg-btn-preview" class="button-secondary">Preview Data</button>
 
                                 <button type="button" id="<?= $idPrefix.$main->get_config('html/ids/reset_button')?>" class="button-primary red" style="float: right;" name="reset_wqg_data">Reset</button>
                             </div>

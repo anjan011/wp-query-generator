@@ -41,6 +41,7 @@
                             'value' => '',
                         ),
                         'label_field' => 'post_title',
+                        'label_field_extra' => 'ID',
                         'value_field' => 'ID',
                         'attributes'  => array(
                             'name'  => 'post[post_id]',

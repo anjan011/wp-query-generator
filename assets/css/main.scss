@@ -213,6 +213,7 @@
 #me-anjan-wqg-form {
 
   margin-bottom: 20px;
+  margin-top: 10px;
 
   @media screen and (max-width: 449px) {
     padding: 5px;
@@ -370,11 +371,23 @@
 }
 
 .me-anjan-wqg-code-help {
-  color: #f80;
+
   font-size: 1.2em;
-  margin-left: 39px;
+  padding: 5px;
+  background-color: lighten(#f80,10%);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
 .syntaxhighlighter {
   font-size: 1.2em !important;
+}
+
+#me-anjan-wqg-preview-box {
+  margin-top: 10px;
+}
+
+.me-anjan-wqg-error {
+  color: red;
 }

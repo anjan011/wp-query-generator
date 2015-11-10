@@ -101,6 +101,7 @@
                             'post'        => $p,
                             'selected'    => $selected,
                             'label_field' => wqg_utils::__ARRAY_VALUE( $params, 'label_field', 'post_title' ),
+                            'label_field_extra' => wqg_utils::__ARRAY_VALUE( $params, 'label_field_extra', '' ),
                             'value_field' => wqg_utils::__ARRAY_VALUE( $params, 'value_field', 'ID' ),
                             'indent'      => 0,
                         ) );
@@ -141,12 +142,19 @@
 
 
             $label_field = wqg_utils::__ARRAY_VALUE( $params, 'label_field', 'post_title' );
+            $label_field_extra = wqg_utils::__ARRAY_VALUE( $params, 'label_field_extra', '' );
             $value_field = wqg_utils::__ARRAY_VALUE( $params, 'value_field', 'ID' );
 
             $indent = (int) wqg_utils::__ARRAY_VALUE( $params, 'indent', 0 );
 
             $label = isset($post->$label_field) ? $post->$label_field : '';
             $value = isset($post->$value_field) ? $post->$value_field : '';
+
+            $label_extra = '';
+
+            if($label_field_extra  != '') {
+                $label_extra = isset($post->$label_field_extra) ? $post->$label_field_extra : '';
+            }
 
             $label = str_repeat( '-', $indent ).$label;
 
@@ -163,7 +171,7 @@
                 $selected_attr = ' selected';
             }
 
-            $html = "<option value='{$value}'{$selected_attr}>{$label}</option>";
+            $html = "<option value='{$value}'{$selected_attr}>{$label}".(!empty($label_extra) ? " ({$label_extra})":'')."</option>";
 
             $params[ 'post_parent' ] = $post->ID;
 

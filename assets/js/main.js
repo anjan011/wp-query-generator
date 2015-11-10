@@ -258,19 +258,17 @@ _.mixin ({
     }
 });
 
-
-
 (function ($) {
 
-    var meAnjanWqgData = _.objValueAsObject(window,'meAnjanWqgData',{});
+    var meAnjanWqgData = _.objValueAsObject(window, 'meAnjanWqgData', {});
 
-    var idPrefix = $.trim(_.objValueAsString(meAnjanWqgData,'idPrefix'));
+    var idPrefix = $.trim(_.objValueAsString(meAnjanWqgData, 'idPrefix'));
 
-    if('' == idPrefix) {
+    if ('' == idPrefix) {
         idPrefix = 'me-anjan-wqg-';
     }
 
-    var html_ids = _.objValueAsObject(meAnjanWqgData,'html_ids',{});
+    var html_ids = _.objValueAsObject(meAnjanWqgData, 'html_ids', {});
 
     /**
      * Main container
@@ -278,7 +276,7 @@ _.mixin ({
      * @type {*|HTMLElement}
      */
 
-    var $mainContainer = $ ('#' + idPrefix + _.objValueAsString(html_ids,'generator_container'));
+    var $mainContainer = $ ('#' + idPrefix + _.objValueAsString(html_ids, 'generator_container'));
 
     /**
      * Tab Panel: Params
@@ -286,7 +284,7 @@ _.mixin ({
      * @type {*|HTMLElement}
      */
 
-    var $tabPanelParams = $ ('#' + idPrefix + _.objValueAsString(html_ids,'tabpanel_params'));
+    var $tabPanelParams = $ ('#' + idPrefix + _.objValueAsString(html_ids, 'tabpanel_params'));
 
     /**
      * Params form
@@ -294,7 +292,7 @@ _.mixin ({
      * @type {*|HTMLElement}
      */
 
-    var $paramForm = $ ('#' + idPrefix + _.objValueAsString(html_ids,'generator_form'));
+    var $paramForm = $ ('#' + idPrefix + _.objValueAsString(html_ids, 'generator_form'));
 
     /**
      * Output Block
@@ -302,7 +300,7 @@ _.mixin ({
      * @type {*|HTMLElement}
      */
 
-    var $outputBlock = $ ('#' + idPrefix + _.objValueAsString(html_ids,'generator_output'));
+    var $outputBlock = $ ('#' + idPrefix + _.objValueAsString(html_ids, 'generator_output'));
 
     /**
      * Reset Button
@@ -310,18 +308,18 @@ _.mixin ({
      * @type {*|HTMLElement}
      */
 
-    var $resetButton = $ ('#' + idPrefix + _.objValueAsString(html_ids,'reset_button'));
+    var $resetButton = $ ('#' + idPrefix + _.objValueAsString(html_ids, 'reset_button'));
 
     /**
      * Init code mirror editor
      */
 
     /*var codeMirror = CodeMirror.fromTextArea ($outputBlock.find('textarea')[0], {
-        mode       : "application/x-httpd-php",
-        readOnly   : true,
-        theme      : _.objValueAsString(meAnjanWqgData,'codeMirrorTheme'),
-        lineNumbers: true
-    });*/
+     mode       : "application/x-httpd-php",
+     readOnly   : true,
+     theme      : _.objValueAsString(meAnjanWqgData,'codeMirrorTheme'),
+     lineNumbers: true
+     });*/
 
     /**
      * params form submission
@@ -335,9 +333,9 @@ _.mixin ({
 
         var formData = $form.serialize ();
 
-        var ajax_url = _.objValueAsObject(meAnjanWqgData,'ajax_url',{});
+        var ajax_url = _.objValueAsObject(meAnjanWqgData, 'ajax_url', {});
 
-        var form_generate_url = $.trim(_.objValueAsString(ajax_url,'form_generate',''));
+        var form_generate_url = $.trim(_.objValueAsString(ajax_url, 'form_generate', ''));
 
         if (form_generate_url != '') {
 
@@ -356,17 +354,14 @@ _.mixin ({
 
                     $form.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
 
-                    html = html.replace('<','&lt;').replace('>','&gt;');
+                    html = html.replace('<', '&lt;').replace('>', '&gt;');
 
                     $outputBlock.find('.me-anjan-wqg-sh-code').empty().html('<pre class="brush: php">' + html + '</pre>');
 
                     SyntaxHighlighter.highlight();
 
-                    $('[href=#me-anjan-wqg-tab-button-code]').click();
-
                 },
                 error      : function () {
-
                     $form.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
 
                     $outputBlock.val ('Error generating code!');
@@ -385,9 +380,9 @@ _.mixin ({
      * Logic for making up tab panel
      */
 
-    $tabPanels.each(function() {
+    $tabPanels.each(function () {
 
-        var $tb = $(this);
+        var $tb = $ (this);
 
         $tb
             .off ('click', '> .me-anjan-wqg-tab-buttons > .me-anjan-wqg-tab-button-wrapper > .me-anjan-wqg-tab-button')
@@ -421,19 +416,17 @@ _.mixin ({
         'min-height': tabButtonListHeight + 'px'
     });
 
-
-
     /**
      * Force form submit on rest button click
      */
 
-    $resetButton.on('click',function() {
+    $resetButton.on('click', function () {
 
-        if(!confirm('Reset form data?')) {
+        if (!confirm ('Reset form data?')) {
             return false;
         }
 
-        $('#' + idPrefix + 'action').val('reset-data');
+        $ ('#' + idPrefix + 'action').val('reset-data');
 
         $paramForm[0].submit();
     });
@@ -442,13 +435,13 @@ _.mixin ({
      * On post_type change perform ajax for fetching post entries
      */
 
-    $mainContainer.on('change','#' + idPrefix + 'post-type',function() {
+    $mainContainer.on('change', '#' + idPrefix + 'post-type', function () {
 
-        var $this = $(this);
+        var $this = $ (this);
 
         var value = $this.val();
 
-        var $postsList = $('#' + idPrefix + 'post-id');
+        var $postsList = $ ('#' + idPrefix + 'post-id');
 
         console.log(value);
 
@@ -466,7 +459,7 @@ _.mixin ({
         });
 
         $mainContainer.find('select').chosen({
-
+            search_contains: true
         });
 
         /**
@@ -474,17 +467,66 @@ _.mixin ({
          * else they would show up with 0px width
          */
 
-        $tabPanelParams.on('click','.me-anjan-wqg-tab-button',function() {
+        $tabPanelParams.on('click', '.me-anjan-wqg-tab-button', function () {
 
-            var id = $(this).data('id');
+            var id = $ (this).data('id');
 
-            jQuery ('#' + id + ' select').chosen('destroy').chosen();
+            jQuery ('#' + id + ' select').chosen('destroy').chosen({
+                search_contains: true
+            });
 
-            $('.wqgCurrentTab').val(id);
+            $ ('.wqgCurrentTab').val(id);
         });
 
-
         SyntaxHighlighter.all();
+
+        /**
+         * Data preview
+         */
+
+        $mainContainer.on('click', '#me-anjan-wqg-btn-preview', function () {
+
+            var $this = $ (this);
+
+            var ajax_url = _.objValueAsObject(meAnjanWqgData, 'ajax_url', {});
+
+            var data_preview_url = $.trim(_.objValueAsString(ajax_url, 'data_preview', ''));
+
+            if (data_preview_url != '') {
+
+                var formData = $paramForm.serialize();
+
+                jQuery.ajax ({
+                    url       : data_preview_url,
+                    type      : 'POST',
+                    dataType  : 'html',
+                    data      : formData,
+                    beforeSend: function () {
+
+                        $paramForm.find ('input[type=submit],button[type=submit]').prop ('disabled', true);
+
+                    },
+                    success   : function (html) {
+
+                        $paramForm.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
+
+                        $ ('#me-anjan-wqg-preview-box').html(html);
+
+                        $ ('[href=#me-anjan-wqg-tab-button-preview]').click();
+
+                    },
+                    error     : function () {
+                        $paramForm.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
+
+                        $ ('#me-anjan-wqg-preview-box').html ('<span class="me-anjan-wqg-error">Error generating code!</span>');
+                    }
+                });
+
+            }
+
+            return false;
+
+        });
 
     });
 

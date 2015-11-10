@@ -15,6 +15,7 @@
         const AJAX_ACTION_AUTHOR_NAME_AUTOCOMLETE = 'wqg_author_name_autocomplete';
         const AJAX_ACTION_TAXONOMY_TERMS = 'me_anjan_wqg_taxonomy_terms';
         const AJAX_ACTION_POST_LIST = 'me_anjan_wqg_post_list';
+        const AJAX_ACTION_DATA_PREVIEW = 'me_anjan_wqg_data_preview';
 
         /* Page slugs */
 
@@ -61,6 +62,8 @@
 
 
             add_action('wp_ajax_'.self::AJAX_ACTION_POST_LIST, array($this,'__action_post_list'));
+
+            add_action('wp_ajax_'.self::AJAX_ACTION_DATA_PREVIEW, array($this,'__action_data_preview'));
 
         }
 
@@ -169,6 +172,9 @@
                         ),
                         'taxonomy_terms' => wqg_utils::wp_ajax_url(
                             self::AJAX_ACTION_TAXONOMY_TERMS
+                        ),
+                        'data_preview' => wqg_utils::wp_ajax_url(
+                            self::AJAX_ACTION_DATA_PREVIEW
                         ),
                     ),
                     'codeMirrorTheme' => self::CODEMIRROR_THEME,
@@ -317,6 +323,39 @@
         function __action_post_list() {
 
             echo wqg_posts::posts_dropdown($_GET);
+
+            exit();
+
+        }
+
+        /**
+         * generate html markup for data preview
+         */
+
+        function __action_data_preview() {
+
+            if(!empty($_POST)) {
+                wqg_utils::save_data($_POST);
+            }
+
+
+            $wqgData = wqg_utils::get_data();
+
+            if(empty($wqgData)) {
+                $wqgData = array();
+            }
+
+            $gen = new wqg_generator( $wqgData );
+
+            $gen->generate_code();
+
+            $args = $gen->getGeneratedArgs();
+
+            $wpq = new WP_Query($args);
+
+            $posts = $wpq->get_posts();
+
+            require_once(ME_ANJAN_PLUGIN_WQG_DIR.'includes/templates/preview/posts-list.php');
 
             exit();
 
