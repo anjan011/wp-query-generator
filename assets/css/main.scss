@@ -391,3 +391,25 @@
 .me-anjan-wqg-error {
   color: red;
 }
+
+#me-anjan-wqg-btn-preview {
+  float: right;
+}
+
+#me-anjan-wqg-tabpanel-params {
+  margin-top: 10px;
+}
+
+.me-anjan-wqg-ajax-loader {
+
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: blue;
+
+  &.img-loader {
+    background: url('../images/ajax/loader.gif') no-repeat left center;
+    padding: 5px 5px 5px 20px;
+  }
+}

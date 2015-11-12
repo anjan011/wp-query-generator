@@ -123,6 +123,149 @@
             $code[] = $this->generate_taxonomy_arg_code( $start_indent );
             $code[] = $this->generate_search_arg_code( $start_indent );
             $code[] = $this->generate_page_and_post_arg_code($start_indent);
+            $code[] = $this->generate_pagination_arg_code($start_indent);
+
+            return join( '', $code );
+
+        }
+
+        public function generate_pagination_arg_code( $start_indent ) {
+
+            /**
+             * @var wpdb $wpdb
+             */
+
+            global $wpdb;
+
+            $start_indent = (int) $start_indent;
+
+            if ( $start_indent < 0 ) {
+                $start_indent = 0;
+            }
+
+            $data = wqg_utils::__ARRAY_VALUE( $this->_data, 'pagination' );
+
+            $code = array();
+
+            if ( is_array( $data ) && count( $data ) > 0 ) {
+
+
+                // nopaging
+
+                $nopaging = wqg_utils::array_value_as_int($data,'nopaging',0);
+
+                $code[] = wqg_utils::_l( $start_indent, "'nopaging' => ".($nopaging > 0 ? 'true':'false').",", 1 );
+
+                $this->_args['nopaging'] = $nopaging > 0;
+
+
+                if(!$nopaging) {
+
+                    // posts_per_page
+
+                    $posts_per_page =  trim(wqg_utils::__ARRAY_VALUE($data,'posts_per_page',''));
+
+                    if($posts_per_page != '') {
+
+                        $posts_per_page = (int)$posts_per_page;
+
+                        $code[] = wqg_utils::_l( $start_indent, "'posts_per_page' => {$posts_per_page},", 1 );
+
+                        $this->_args['posts_per_page'] = $posts_per_page;
+
+                    }
+
+
+
+                    // page
+
+                    $page =  trim(wqg_utils::__ARRAY_VALUE($data,'page',''));
+
+                    if($page != '') {
+
+                        $page = (int)$page;
+
+                        $code[] = wqg_utils::_l( $start_indent, "'page' => {$page},", 1 );
+
+                        $this->_args['page'] = $page;
+
+                    }
+
+                    // paged
+
+                    $paged =  trim(wqg_utils::__ARRAY_VALUE($data,'paged',''));
+
+                    if($paged != '') {
+
+                        $paged =  (int)$paged;
+
+                        $code[] = wqg_utils::_l( $start_indent, "'paged' => {$paged},", 1 );
+
+                        $this->_args['paged'] = $paged;
+
+                    }
+
+                    // offset
+
+                    $offset =  trim(wqg_utils::__ARRAY_VALUE($data,'offset',''));
+
+                    if($offset != '') {
+
+                        $offset =  (int)$offset;
+
+                        if($offset >= 0) {
+
+                            $code[] = wqg_utils::_l( $start_indent, "'offset' => {$offset},", 1 );
+
+                            $this->_args['offset'] = $offset;
+
+                        }
+
+
+
+                    }
+
+                    // posts_per_archive_page
+
+                    $posts_per_archive_page =  trim(wqg_utils::__ARRAY_VALUE($data,'posts_per_archive_page',''));
+
+                    if($posts_per_archive_page != '') {
+
+                        $posts_per_archive_page = (int)$posts_per_archive_page;
+
+                        $code[] = wqg_utils::_l( $start_indent, "'posts_per_archive_page' => {$posts_per_archive_page},", 1 );
+
+                        $this->_args['posts_per_archive_page'] = $posts_per_archive_page;
+
+                    }
+
+                    // ignore_sticky_posts
+
+                    $ignore_sticky_posts = wqg_utils::array_value_as_int($data,'ignore_sticky_posts',0);
+
+                    $code[] = wqg_utils::_l( $start_indent, "'ignore_sticky_posts' => ".($ignore_sticky_posts > 0 ? 'true':'false').",", 1 );
+
+                    $this->_args['ignore_sticky_posts'] = $ignore_sticky_posts > 0;
+
+
+
+                }
+
+
+
+            }
+
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Pagination params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
+
+            }
 
             return join( '', $code );
 
@@ -194,11 +337,29 @@
 
             }
 
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Authors params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
+
+            }
+
             return join( '', $code );
 
         }
 
         public function generate_page_and_post_arg_code( $start_indent ) {
+
+            /**
+             * @var wpdb $wpdb
+             */
+
+            global $wpdb;
 
             $start_indent = (int) $start_indent;
 
@@ -211,6 +372,30 @@
             $code = array();
 
             if ( is_array( $data ) && count( $data ) > 0 ) {
+
+
+                // post_status
+
+                $post_status = wqg_utils::array_value_as_array($data,'post_status',array());
+
+                if ( is_array( $post_status ) && count( $post_status ) > 0 ) {
+
+                    if(in_array('any',$post_status)) {
+                        $post_status = array('any');
+                    } else {
+                        $post_status = array_unique( array_map( 'trim', $post_status ) );
+                    }
+
+                    if(count($post_status) > 1) {
+                        $code[] = wqg_utils::_l( $start_indent, "'post_status' => array('".join( "', '", $post_status )."'),", 1 );
+                    } else {
+                        $code[] = wqg_utils::_l( $start_indent, "'post_status' => '{$post_status[0]}',", 1 );
+                    }
+
+
+
+                    $this->_args[ 'post_status' ] = $post_status;
+                }
 
                 // post_type
 
@@ -237,25 +422,115 @@
 
                 // post_id
 
-                $post_id = (int) wqg_utils::__ARRAY_VALUE( $data, 'post_id', 0 );
+                $post_id = wqg_utils::array_value_as_array( $data, 'post_id', array() );
 
-                if ( $post_id > 0 ) {
-                    $code[] = wqg_utils::_l( $start_indent, "'p' => {$post_id},", 1 );
+                if(count($post_id) > 0) {
 
-                    $this->_args[ 'p' ] = $post_id;
+                    $post_id = array_map('intval',$post_id);
+
+                    if(count($post_id) > 1) {
+
+                        $code[] = wqg_utils::_l( $start_indent, "'post__in' => array(".join(',',$post_id)."),", 1 );
+
+                        $this->_args[ 'post__in' ] = $post_id;
+
+                    } else {
+
+                        $code[] = wqg_utils::_l( $start_indent, "'p' => {$post_id[0]},", 1 );
+
+                        $this->_args[ 'p' ] = $post_id[0];
+
+                    }
+
                 }
 
                 // post_slug
 
                 $post_slug = wqg_utils::array_value_as_string($data,'post_slug','','trim');
 
+
                 if($post_slug != '') {
+
+                    $post_slug = $wpdb->_escape($post_slug);
+
                     $code[] = wqg_utils::_l( $start_indent, "'name' => '{$post_slug}',", 1 );
 
                     $this->_args[ 'name' ] = $post_slug;
+
+                }
+
+                // post_id_not_in
+
+                $post_id_not_in = wqg_utils::array_value_as_array($data,'post_id_not_in',array());
+
+                if(is_array($post_id_not_in) && !empty($post_id_not_in)) {
+
+                    $post_id_not_in = array_map('intval',$post_id_not_in);
+
+                    $code[] = wqg_utils::_l( $start_indent, "'post__not_in' => array(".join(',',$post_id_not_in)."),", 1 );
+
+                    $this->_args[ 'post__not_in' ] = $post_id_not_in;
+
                 }
 
 
+                // post_parent
+
+                $post_parent = wqg_utils::array_value_as_array($data,'post_parent',array());
+
+                if(is_array($post_parent) && !empty($post_parent)) {
+
+
+
+                    $post_parent = array_map('intval',$post_parent);
+
+                    if(count($post_parent) > 1) {
+                        $code[] = wqg_utils::_l( $start_indent, "'post_parent__in' => array(".join(',',$post_parent)."),", 1 );
+
+                        $this->_args[ 'post_parent__in' ] = $post_parent;
+                    } else {
+
+                        $code[] = wqg_utils::_l( $start_indent, "'post_parent' => ".$post_parent[0].",", 1 );
+
+                        $this->_args[ 'post_parent' ] = $post_parent[0];
+
+                    }
+
+
+
+                }
+
+                // post_parent_not_in
+
+                $post_parent_not_in = wqg_utils::array_value_as_array($data,'post_parent_not_in',array());
+
+                if(is_array($post_parent_not_in) && !empty($post_parent_not_in)) {
+
+
+
+                    $post_parent_not_in = array_map('intval',$post_parent_not_in);
+
+                    $code[] = wqg_utils::_l( $start_indent, "'post_parent__not_in' => array(".join(',',$post_parent_not_in)."),", 1 );
+
+                    $this->_args[ 'post_parent__not_in' ] = $post_parent_not_in;
+
+
+
+                }
+
+
+
+            }
+
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Post params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
 
             }
 
@@ -339,6 +614,18 @@
                 if ( count( $code ) > 0 ) {
                     $code[] = wqg_utils::_l( 0, '', 1 );
                 }
+
+            }
+
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Categories params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
 
             }
 
@@ -451,6 +738,18 @@
 
             }
 
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Tags params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
+
+            }
+
             return join( '', $code );
 
         }
@@ -544,6 +843,14 @@
 
                             $code[] = wqg_utils::_l( $start_indent + 1, "),", 1 );
 
+                            $this->_args['tax_query'][] = array(
+                                'taxonomy' => $name,
+                                'field' => $field,
+                                'terms' => $term,
+                                'operator' => $operator,
+                                'include_children' => $include_children > 0
+                            );
+
                         }
 
                     }
@@ -553,6 +860,18 @@
 
                 }
 
+
+            }
+
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Taxonomy params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
 
             }
 
@@ -587,6 +906,18 @@
                     $code[] = wqg_utils::_l( $start_indent, "'s' => '".($keyword)."'", 1 );
 
                 }
+
+            }
+
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Search params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
 
             }
 

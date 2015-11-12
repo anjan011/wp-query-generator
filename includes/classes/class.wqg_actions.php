@@ -176,6 +176,9 @@
                         'data_preview' => wqg_utils::wp_ajax_url(
                             self::AJAX_ACTION_DATA_PREVIEW
                         ),
+                        'post_list' => wqg_utils::wp_ajax_url(
+                            self::AJAX_ACTION_POST_LIST
+                        ),
                     ),
                     'codeMirrorTheme' => self::CODEMIRROR_THEME,
                     'html_ids' => $main->get_config('html/ids'),
@@ -322,7 +325,11 @@
 
         function __action_post_list() {
 
-            echo wqg_posts::posts_dropdown($_GET);
+            $posts = array();
+
+            wqg_posts::get_posts_minimal($posts,$_GET);
+
+            echo json_encode($posts);
 
             exit();
 

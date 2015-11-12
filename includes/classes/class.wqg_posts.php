@@ -30,7 +30,45 @@
 
             $posts = $q->get_posts();
 
+            $q->reset_postdata();
+
             return $posts;
+
+        }
+
+        public static function get_posts_minimal(&$posts = array(),$params = array()) {
+
+            $post_types = wqg_utils::array_value_as_array( $params, 'post_type', array( 'post' ) );
+
+            foreach($post_types as $ptype) {
+
+                if(!isset($posts[$ptype])) {
+                    $posts[$ptype] = array();
+                }
+
+                $newParams = $params;
+
+                $newParams['post_type'] = array($ptype);
+
+                $foundPosts = self::get_posts($newParams);
+
+                if(!is_array($foundPosts) || count($foundPosts) == 0) {
+                    $posts[$ptype] = array();
+                } else {
+
+                    foreach($foundPosts as $fp) {
+
+                        $posts[$ptype][] = array(
+                            'id' => $fp->ID,
+                            'title' => $fp->post_title,
+                            'slug' => $fp->post_name,
+                        );
+
+                    }
+
+                }
+
+            }
 
         }
 

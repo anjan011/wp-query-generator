@@ -2,6 +2,125 @@
  * Created by anjan on 9/14/15.
  */
 
+/**
+ * Show/hide an ajax loader element
+ *
+ * @param action
+ * @param $element
+ * @param content
+ * @param cssClass
+ * @returns {boolean}
+ */
+
+function meAnjanWqg_AjaxLoader (action, $element, content, cssClass) {
+
+    if (typeof $element == 'string') {
+        $element = jQuery ($element);
+    } else if (!($element instanceof jQuery)) {
+        return false;
+    }
+
+    action = jQuery.trim(action);
+
+    switch (action) {
+        case 'show':
+        case 'hide':
+            break;
+        default:
+            action = 'show';
+            break;
+    }
+
+    content = jQuery.trim(content);
+
+    if ('' == content) {
+        content = 'Please wait ...';
+    }
+
+    var $loader = $element.next('.me-anjan-wqg-ajax-loader');
+
+    if ('hide' == action) {
+        $loader.hide();
+    } else {
+
+        if ($loader.length > 0) {
+            $loader.html(content).show();
+        } else {
+
+            jQuery ('<div class="me-anjan-wqg-ajax-loader ' + cssClass + '">' + content + '</div>').insertAfter($element);
+
+        }
+
+    }
+
+}
+
+/**
+ * Updates a post list dropdown with data
+ *
+ * @param params
+ * @returns {boolean}
+ */
+
+function meAnjanWqg_UpdatePostsDropdown (params) {
+
+    var postData = _.objValueAsObject(params, 'data', {});
+
+    var $select = _.objValue(params, 'select');
+
+    if (typeof $select == 'string') {
+        $select = jQuery ($select);
+    } else if (!($select instanceof jQuery)) {
+        return false;
+    }
+
+    var optionsCallback = _.has(params, 'optionsCallback') && _.isFunction(params.optionsCallback) ? params.optionsCallback : false;
+
+    var html = [];
+
+    if (_.has(params, 'blankElement') && jQuery.trim(params.blankElement) != '') {
+        html.push(params.blankElement);
+    }
+
+    for (var optGroup in postData) {
+
+        if (postData.hasOwnProperty(optGroup)) {
+
+            html.push('<optgroup label="' + optGroup + '">');
+
+            var entries = postData[optGroup];
+
+            if (_.isArray(entries) && entries.length > 0) {
+                var loopCount1 = entries.length;
+
+                for (var i = 0; i < loopCount1; i += 1) {
+
+                    var p = entries[i];
+
+                    if (optionsCallback === false) {
+
+                        html.push('<option value="' + p.id + '">' + p.title + '</option>');
+
+                    } else {
+                        html.push(optionsCallback.apply(null, [p]));
+                    }
+
+                }
+            }
+
+            html.push('</optgroup>');
+
+        }
+
+    }
+
+    $select.html(html.join(''));
+
+    if (_.has(params, 'afterUpdate') && _.isFunction(params.afterUpdate)) {
+        params.afterUpdate.apply(null, [$select]);
+    }
+
+}
 
 _.mixin ({
 
@@ -311,17 +430,6 @@ _.mixin ({
     var $resetButton = $ ('#' + idPrefix + _.objValueAsString(html_ids, 'reset_button'));
 
     /**
-     * Init code mirror editor
-     */
-
-    /*var codeMirror = CodeMirror.fromTextArea ($outputBlock.find('textarea')[0], {
-     mode       : "application/x-httpd-php",
-     readOnly   : true,
-     theme      : _.objValueAsString(meAnjanWqgData,'codeMirrorTheme'),
-     lineNumbers: true
-     });*/
-
-    /**
      * params form submission
      */
 
@@ -359,6 +467,12 @@ _.mixin ({
                     $outputBlock.find('.me-anjan-wqg-sh-code').empty().html('<pre class="brush: php">' + html + '</pre>');
 
                     SyntaxHighlighter.highlight();
+
+                    $ ('[href=#me-anjan-wqg-tab-button-code]').click();
+
+                    // todo: determine if we scroll to element or not
+
+                    /*jQuery("html, body").animate({ scrollTop: jQuery('#me-anjan-wqg-form').offset().top }, 1000);*/
 
                 },
                 error      : function () {
@@ -442,10 +556,88 @@ _.mixin ({
         var value = $this.val();
 
         var $postsList = $ ('#' + idPrefix + 'post-id');
+        var $postsSlugList = $ ('#' + idPrefix + 'post-slug');
+        var $parentPostsList = $ ('#' + idPrefix + 'post-parent');
 
-        console.log(value);
+        var ajax_url = _.objValueAsObject(meAnjanWqgData, 'ajax_url', {});
 
-        console.log($postsList);
+        var post_list_url = $.trim(_.objValueAsString(ajax_url, 'post_list', ''));
+
+        if (post_list_url != '') {
+
+            jQuery.ajax ({
+                url       : post_list_url,
+                type      : 'GET',
+                dataType  : 'json',
+                data      : {
+                    post_type: value
+                },
+                beforeSend: function () {
+
+                    meAnjanWqg_AjaxLoader ('show', $this.next('.chosen-container'), 'Please wait ...', 'img-loader');
+
+                },
+                success   : function (postsData) {
+
+                    meAnjanWqg_AjaxLoader ('hide', $this.next('.chosen-container'));
+
+                    meAnjanWqg_UpdatePostsDropdown ({
+                        data           : postsData,
+                        select         : $postsList,
+                        optionsCallback: function (o) {
+
+                            return '<option value="' + o.id + '">' + o.title + ' (' + o.id + ')' + '</option>';
+
+                        },
+                        afterUpdate    : function ($select) {
+
+                            $select.val($select.data('lastValue'));
+
+                            $select.trigger('chosen:updated');
+                        }
+                    });
+
+                    meAnjanWqg_UpdatePostsDropdown ({
+                        data           : postsData,
+                        select         : $postsSlugList,
+                        optionsCallback: function (o) {
+
+                            return '<option value="' + o.slug + '">' + o.slug + '</option>';
+
+                        },
+                        afterUpdate    : function ($select) {
+
+                            $select.val($select.data('lastValue'));
+
+                            $select.trigger('chosen:updated');
+                        },
+                        blankElement   : '<option value=""><option>'
+                    });
+
+                    meAnjanWqg_UpdatePostsDropdown ({
+                        data           : postsData,
+                        select         : $parentPostsList,
+                        optionsCallback: function (o) {
+
+                            return '<option value="' + o.id + '">' + o.title + ' (' + o.id + ')' + '</option>';
+
+                        },
+                        afterUpdate    : function ($select) {
+
+                            $select.val($select.data('lastValue'));
+
+                            $select.trigger('chosen:updated');
+                        },
+                        blankElement   : '<option value=""><option>'
+                    });
+
+                },
+                error     : function () {
+                    meAnjanWqg_AjaxLoader ('hide', $this.next('.chosen-container'));
+                }
+            });
+
+        }
 
     });
 
@@ -459,7 +651,8 @@ _.mixin ({
         });
 
         $mainContainer.find('select').chosen({
-            search_contains: true
+            search_contains      : true,
+            allow_single_deselect: true
         });
 
         /**
@@ -472,7 +665,8 @@ _.mixin ({
             var id = $ (this).data('id');
 
             jQuery ('#' + id + ' select').chosen('destroy').chosen({
-                search_contains: true
+                search_contains      : true,
+                allow_single_deselect: true
             });
 
             $ ('.wqgCurrentTab').val(id);
@@ -525,6 +719,41 @@ _.mixin ({
             }
 
             return false;
+
+        });
+
+        /**
+         * make the dropdowns remember their last selected value
+         */
+
+        $mainContainer.on('change', 'select', function () {
+
+            var $this = $ (this);
+
+            $this.data('lastValue', $this.val());
+
+        });
+
+        $('#me-anjan-wqg-post-id').trigger('change');
+        $('#me-anjan-wqg-post-slug').trigger('change');
+
+        $('#me-anjan-wqg-cb-nopaging').on('click',function() {
+
+            var $tbody = $('#me-anjan-wqg-tbody-pagination-params');
+
+            var checked = $(this).prop('checked');
+
+            if(checked) {
+
+                $tbody.hide();
+
+                $tbody.find('input,select,textarea').prop('disabled',true);
+
+            } else {
+                $tbody.show();
+
+                $tbody.find('input,select,textarea').prop('disabled',false);
+            }
 
         });
 

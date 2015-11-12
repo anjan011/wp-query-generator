@@ -1,7 +1,9 @@
 <div class="me-anjan-wqg-output-block" id="<?= $idPrefix.$main->get_config( 'html/ids/generator_output' ) ?>">
 
-    <p class="me-anjan-wqg-code-help">
-        Double click on anywhere in the code to select and copy
+    <p class="me-anjan-wqg-code-help clearfix">
+        Double click on anywhere in the code to select and copy <button type="button" id="me-anjan-wqg-btn-preview" class="button-secondary">Preview
+            Data
+        </button>
     </p>
 
     <?php
