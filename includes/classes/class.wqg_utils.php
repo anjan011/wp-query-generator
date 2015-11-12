@@ -364,4 +364,18 @@
 
         }
 
+        public static function is_min_wp_version($version = '') {
+
+            $version = trim($version);
+
+            if(!$version) {
+                return false;
+            }
+
+            $current_version = get_bloginfo('version');
+
+            return version_compare($current_version,$version,'>=');
+
+        }
+
     }

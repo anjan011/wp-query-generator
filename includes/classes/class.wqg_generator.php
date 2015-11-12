@@ -124,6 +124,81 @@
             $code[] = $this->generate_search_arg_code( $start_indent );
             $code[] = $this->generate_page_and_post_arg_code($start_indent);
             $code[] = $this->generate_pagination_arg_code($start_indent);
+            $code[] = $this->generate_sorting_arg_code($start_indent);
+
+            return join( '', $code );
+
+        }
+
+        public function generate_sorting_arg_code( $start_indent ) {
+
+            /**
+             * @var wpdb $wpdb
+             */
+
+            global $wpdb;
+
+            $start_indent = (int) $start_indent;
+
+            if ( $start_indent < 0 ) {
+                $start_indent = 0;
+            }
+
+            $data = wqg_utils::__ARRAY_VALUE( $this->_data, 'sorting' );
+
+            $code = array();
+
+            if ( is_array( $data ) && count( $data ) > 0 ) {
+
+
+                // order
+
+                $order = wqg_utils::array_value_as_string($data,'order','','trim');
+
+
+                if($order != '') {
+
+                    $orderEsc = $wpdb->_escape($order);
+
+                    $code[] = wqg_utils::_l( $start_indent, "'order' => '{$orderEsc}',", 1 );
+
+                    $this->_args['order'] = $order;
+                }
+
+                // orderby
+
+                $orderby = wqg_utils::array_value_as_string($data,'orderby','','trim');
+
+
+                if($orderby != '') {
+
+                    $orderbyEsc = $wpdb->_escape($orderby);
+
+                    $code[] = wqg_utils::_l( $start_indent, "'orderby' => '{$orderbyEsc}',", 1 );
+
+                    $this->_args['orderby'] = $orderbyEsc;
+                }
+
+
+
+
+
+
+
+
+            }
+
+            if(!empty($code)) {
+
+                $content = PHP_EOL;
+
+                $content .= wqg_utils::_l( $start_indent, "/* Sorting params */", 2 );
+
+                $content .= join( '', $code );
+
+                return $content;
+
+            }
 
             return join( '', $code );
 
@@ -246,8 +321,6 @@
                     $code[] = wqg_utils::_l( $start_indent, "'ignore_sticky_posts' => ".($ignore_sticky_posts > 0 ? 'true':'false').",", 1 );
 
                     $this->_args['ignore_sticky_posts'] = $ignore_sticky_posts > 0;
-
-
 
                 }
 

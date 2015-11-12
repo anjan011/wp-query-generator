@@ -678,7 +678,7 @@ _.mixin ({
          * Data preview
          */
 
-        $mainContainer.on('click', '#me-anjan-wqg-btn-preview', function () {
+        $mainContainer.on('click', '.me-anjan-wqg-btn-preview', function () {
 
             var $this = $ (this);
 
@@ -697,12 +697,12 @@ _.mixin ({
                     data      : formData,
                     beforeSend: function () {
 
-                        $paramForm.find ('input[type=submit],button[type=submit]').prop ('disabled', true);
+                        $paramForm.find ('input[type=submit],button').prop ('disabled', true);
 
                     },
                     success   : function (html) {
 
-                        $paramForm.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
+                        $paramForm.find ('input[type=submit],button').prop ('disabled', false);
 
                         $ ('#me-anjan-wqg-preview-box').html(html);
 
@@ -710,7 +710,7 @@ _.mixin ({
 
                     },
                     error     : function () {
-                        $paramForm.find ('input[type=submit],button[type=submit]').prop ('disabled', false);
+                        $paramForm.find ('input[type=submit],button').prop ('disabled', false);
 
                         $ ('#me-anjan-wqg-preview-box').html ('<span class="me-anjan-wqg-error">Error generating code!</span>');
                     }

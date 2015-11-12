@@ -1,3 +1,10 @@
+
+<p class="me-anjan-wqg-code-help clearfix">
+     <button type="button" class="button-secondary me-anjan-wqg-btn-preview">
+        Reload
+    </button>
+</p>
+
 <div id="me-anjan-wqg-preview-box">
 <?php
     /**

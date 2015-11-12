@@ -7,6 +7,9 @@
                 <th>Title</th>
                 <th>Type</th>
                 <th>Status</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Comments</th>
             </tr>
         </thead>
         <tbody>
@@ -20,10 +23,23 @@
                 </td>
                 <td><?= htmlentities($p->post_type)?></td>
                 <td><?= htmlentities($p->post_status)?></td>
+                <td><?= get_the_author_meta('display_name', $p->post_author);?></td>
+                <td><?= date( 'M d, Y h:i a' ,strtotime($p->post_date));?></td>
+                <td><?= (int)$p->comment_count;?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
+
+    <?php
+
+    echo '<div style="clear: both;"></div>';
+    echo '<pre style="border: solid 1px #ccc;box-shadow: 2px 2px 2px #999;padding: 10px;border-radius: 10px;box-sizing: border-box;margin: 10px;word-wrap: break-word;">';
+    print_r(@$p);
+    echo '</pre>';
+    echo '<div style="clear: both;"></div>';
+
+    ?>
 
 <?php else: ?>
     <span style="color: red;">No posts found!</span>

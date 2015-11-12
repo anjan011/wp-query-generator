@@ -237,4 +237,45 @@
 
         }
 
+        public static function getPostOrderByFields() {
+
+            $keys = array(
+
+                'ID',
+                'author',
+                'title',
+                'name',
+                'date',
+                'modified',
+                'parent',
+                'rand',
+                'menu_order',
+                'meta_value',
+
+            );
+
+            if(wqg_utils::is_min_wp_version('2.8')) {
+                $keys[] = 'none';
+                $keys[] = 'meta_value_num';
+            }
+
+            if(wqg_utils::is_min_wp_version('2.9')) {
+                $keys[] = 'comment_count';
+            }
+
+            if(wqg_utils::is_min_wp_version('3.5')) {
+                $keys[] = 'post__in';
+            }
+
+            if(wqg_utils::is_min_wp_version('4.0')) {
+                $keys[] = 'type';
+            }
+
+            asort($keys);
+
+            return $keys;
+
+
+        }
+
     }
