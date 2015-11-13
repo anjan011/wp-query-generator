@@ -1,6 +1,6 @@
 <?php if (isset($posts) && is_array($posts) && count($posts) > 0): ?>
 
-    <table class="wp-list-table widefat">
+    <table class="wp-list-table widefat me-anjan-wqg-privew-table">
         <thead>
             <tr>
                 <th>ID</th>

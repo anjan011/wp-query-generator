@@ -757,6 +757,24 @@ _.mixin ({
 
         });
 
+        $('#me-anjan-wqg-sorting-orderby').on('change',function() {
+
+            var val = $(this).val();
+
+            var allowedValues = ['meta_value','meta_value_num'];
+
+            if(allowedValues.indexOf(val) >= 0) {
+
+                $('#me-anjan-wqg-tr-sorting-meta-key').show().find('select').prop('disabled',false).trigger('chosen:updated');
+
+
+            } else {
+
+                $('#me-anjan-wqg-tr-sorting-meta-key').hide().find('select').prop('disabled',true);
+            }
+
+        });
+
     });
 
 }) (jQuery);
