@@ -8,7 +8,7 @@
 
     <?php
         $gen = new wqg_generator( $wqgData );
-        $generatedCode = $gen->generate_code();
+        $generatedCode = $gen->generateCode();
 
         $generatedCode = str_replace('<','&lt;',$generatedCode);
     ?>

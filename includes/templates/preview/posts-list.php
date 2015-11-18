@@ -30,17 +30,6 @@
         <?php endforeach; ?>
         </tbody>
     </table>
-
-    <?php
-
-    echo '<div style="clear: both;"></div>';
-    echo '<pre style="border: solid 1px #ccc;box-shadow: 2px 2px 2px #999;padding: 10px;border-radius: 10px;box-sizing: border-box;margin: 10px;word-wrap: break-word;">';
-    print_r(@$p);
-    echo '</pre>';
-    echo '<div style="clear: both;"></div>';
-
-    ?>
-
 <?php else: ?>
     <span style="color: red;">No posts found!</span>
 <?php endif; ?>
@@ -48,7 +37,7 @@
 <?php
     echo '<div style="clear: both;"></div>';
     echo '<pre style="border: solid 1px #ccc;box-shadow: 2px 2px 2px #999;padding: 10px;border-radius: 10px;box-sizing: border-box;margin: 10px;word-wrap: break-word;">';
-    print_r($args);
+    print_r ($query->request);
     echo '</pre>';
     echo '<div style="clear: both;"></div>';
 ?>

@@ -291,7 +291,7 @@
 
             $generator = new wqg_generator( $_POST );
 
-            echo($generator->generate_code());
+            echo($generator->generateCode());
 
             exit();
 
@@ -354,13 +354,13 @@
 
             $gen = new wqg_generator( $wqgData );
 
-            $gen->generate_code();
+            $gen->generateCode();
 
             $args = $gen->getGeneratedArgs();
 
-            $wpq = new WP_Query($args);
+            $query = new WP_Query($args);
 
-            $posts = $wpq->get_posts();
+            $posts = $query->get_posts();
 
             require_once(ME_ANJAN_PLUGIN_WQG_DIR.'includes/templates/preview/posts-list.php');
 

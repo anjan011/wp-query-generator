@@ -379,6 +379,11 @@ _.mixin ({
 
 (function ($) {
 
+    var chosenParams = {
+        search_contains      : true,
+        allow_single_deselect: true
+    };
+
     var meAnjanWqgData = _.objValueAsObject(window, 'meAnjanWqgData', {});
 
     var idPrefix = $.trim(_.objValueAsString(meAnjanWqgData, 'idPrefix'));
@@ -650,10 +655,7 @@ _.mixin ({
             });
         });
 
-        $mainContainer.find('select').chosen({
-            search_contains      : true,
-            allow_single_deselect: true
-        });
+        $mainContainer.find('select').chosen(chosenParams);
 
         /**
          * Special action to perform on params tab button clicks. We need to re-init chosen dropdowns
@@ -664,10 +666,7 @@ _.mixin ({
 
             var id = $ (this).data('id');
 
-            jQuery ('#' + id + ' select').chosen('destroy').chosen({
-                search_contains      : true,
-                allow_single_deselect: true
-            });
+            jQuery ('#' + id + ' select').chosen('destroy').chosen(chosenParams);
 
             $ ('.wqgCurrentTab').val(id);
         });
@@ -761,20 +760,224 @@ _.mixin ({
 
             var val = $(this).val();
 
+            var $metaKeyList = $('#me-anjan-wqg-sorting-meta-key');
+
             var allowedValues = ['meta_value','meta_value_num'];
+
+
 
             if(allowedValues.indexOf(val) >= 0) {
 
-                $('#me-anjan-wqg-tr-sorting-meta-key').show().find('select').prop('disabled',false).trigger('chosen:updated');
+                $('#me-anjan-wqg-tr-sorting-meta-key').show();
 
+                $metaKeyList.chosen('destroy');
+
+                $metaKeyList.prop('disabled',false);
+
+                $metaKeyList.chosen(chosenParams);
 
             } else {
 
-                $('#me-anjan-wqg-tr-sorting-meta-key').hide().find('select').prop('disabled',true);
+                $('#me-anjan-wqg-tr-sorting-meta-key').hide();
+
+                $metaKeyList.chosen('destroy');
+
+                $metaKeyList.prop('disabled',true);
+
             }
 
         });
 
     });
+
+    /**
+     * Generates a block number for a date criteria box
+     *
+     * @returns {*}
+     */
+
+    function getDateQueryCriteriaBlockId() {
+        return $('#me-anjan-wqg-date-criteria-container').find('.me-anjan-wqg-date-criteria-box').length + 1;
+    }
+
+    /**
+     * Generates html code for a criteria block
+     *
+     * @param blockId
+     * @param values
+     * @returns {{htmlId: string, html: string}}
+     */
+
+    function generateHtmlForDateQueryCriteriaBlock(blockId,values) {
+
+        blockId = $.trim(blockId);
+
+        if(blockId == '') {
+            blockId = getDateQueryCriteriaBlockId();
+        }
+
+        values = _.isPlainObject(values) ? values : {};
+
+        var html = [];
+
+        var blockHtmlId = 'me-anjan-wqg-date-criteria-box-' + blockId;
+
+        html.push('<div class="me-anjan-wqg-date-criteria-box" id="' + blockHtmlId + '">');
+
+        /* close button */
+
+        html.push('<span class="dashicons dashicons-dismiss"></span>');
+
+        /* Column */
+
+        var cols = ['post_date','post_date_gmt','post_modified','post_modified_gmt'];
+
+        html.push('<label>');
+        html.push('<span>Column</span>');
+        html.push('<select name="date_query[criteria][' + blockId + '][column]" size="1">');
+
+        var loopCount1 = cols.length;
+
+        for (var i = 0; i < loopCount1; i += 1) {
+            html.push('<option value="' + cols[i] + '" ' + (_.objValueAsString(values,'column','post_date') == cols[i] ? 'selected':'') + '>' + cols[i] + '</option>');
+        }
+
+        html.push('</select>');
+        html.push('</label>');
+
+        /* Compare */
+
+        var compares = ['=', '!=', '>', '>=', '<', '<=', 'IN', 'NOT IN', 'BETWEEN', 'NOT BETWEEN'];
+
+        html.push('<label>');
+        html.push('<span>Compare Type</span>');
+        html.push('<select name="date_query[criteria][' + blockId + '][compare]" size="1">');
+
+        var comparesLen = compares.length;
+
+        for (var i = 0; i < comparesLen; i += 1) {
+
+            var v = compares[i].toUpperCase();
+
+            html.push('<option value="' + v + '" ' + (_.objValueAsString(values,'compare','=') == v ? 'selected':'') + '>' + v + '</option>');
+        }
+
+        html.push('</select>');
+        html.push('</label>');
+
+        /* year */
+
+        html.push('<label>');
+        html.push('<span>Year</span>');
+        html.push('<input type="text" name="date_query[criteria][' + blockId + '][year]" value="' + _.objValueAsString(values,'year') + '" />');
+        html.push('</label>');
+        html.push('<label>');
+
+        /* month */
+
+        html.push('<span>Month</span>');
+        html.push('<input type="text" name="date_query[criteria][' + blockId + '][month]" value="' + _.objValueAsString(values,'month') + '" />');
+        html.push('</label>');
+        html.push('<label>');
+
+        /* week */
+
+        html.push('<span>Week</span>');
+        html.push('<input type="text" name="date_query[criteria][' + blockId + '][week]" value="' + _.objValueAsString(values,'week') + '" />');
+        html.push('</label>');
+        html.push('<label>');
+
+        /* day */
+
+        html.push('<span>Day</span>');
+        html.push('<input type="text" name="date_query[criteria][' + blockId + '][day]" value="' + _.objValueAsString(values,'day') + '" />');
+        html.push('</label>');
+
+        /* hour */
+
+        html.push('<label>');
+        html.push('<span>Hour</span>');
+        html.push('<input type="text" name="date_query[criteria][' + blockId + '][hour]" value="' + _.objValueAsString(values,'hour') + '" />');
+        html.push('</label>');
+
+        /* minute */
+
+        html.push('<label>');
+        html.push('<span>Minute</span>');
+        html.push('<input type="text" name="date_query[criteria][' + blockId + '][minute]" value="' + _.objValueAsString(values,'minute') + '" />');
+        html.push('</label>');
+
+        /* second */
+
+        html.push('<label>');
+        html.push('<span>Second</span>');
+        html.push('<input type="text" name="date_query[criteria][' + blockId + '][second]" value="' + _.objValueAsString(values,'second') + '" />');
+        html.push('</label>');
+
+        html.push('</div>');
+
+        return {
+            htmlId : blockHtmlId,
+            html : html.join('')
+        }
+
+    }
+
+    /**
+     * Generates and appends date criteria box in dom
+     *
+     * @param blockId
+     * @param values
+     */
+
+    function appendDateCriteriaBox(blockId,values) {
+
+        var data = generateHtmlForDateQueryCriteriaBlock(blockId,values);
+
+        var html = _.objValueAsString(data,'html','');
+
+        var blockhtmlId = $.trim(_.objValueAsString(data,'htmlId',''));
+
+        if(blockhtmlId != '') {
+
+            $dateQueryCriteriaContainer.append(html);
+
+            var $block = $('#' + blockhtmlId);
+
+            $block.find('select').chosen(chosenParams);
+
+            $block.on('click','.dashicons-dismiss',function() {
+
+                if(!confirm('Remove this block?')) {
+                    return false;
+                }
+
+                $(this).parent().remove();
+
+            });
+
+        }
+
+    }
+
+    var $dateQueryCriteriaContainer = $('#me-anjan-wqg-date-criteria-container');
+
+    $mainContainer.on('click','#me-anjan-wqg-add-date-criteria-box',function() {
+
+        appendDateCriteriaBox('',{});
+
+    });
+
+    if(_.has(window,'meAnjanWqgDateQueryCriterias') && _.isArray(meAnjanWqgDateQueryCriterias)) {
+
+        var loopCount1 = meAnjanWqgDateQueryCriterias.length;
+
+        for (var i = 0; i < loopCount1; i += 1) {
+
+            appendDateCriteriaBox(i,meAnjanWqgDateQueryCriterias[i]);
+
+        }
+
+    }
 
 }) (jQuery);

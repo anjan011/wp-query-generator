@@ -66,8 +66,14 @@
         ),
         array(
             'id'     => $idPrefix.'tab-date',
-            'label'  => 'Date',
+            'label'  => 'Date (Simple)',
             'slug'   => 'date',
+            'active' => FALSE,
+        ),
+        array(
+            'id'     => $idPrefix.'tab-date-query',
+            'label'  => 'Date (Advanced)',
+            'slug'   => 'date-query',
             'active' => FALSE,
         ),
         array(
