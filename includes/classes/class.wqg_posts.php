@@ -237,6 +237,12 @@
 
         }
 
+        /**
+         * Gets post order by field values
+         *
+         * @return array
+         */
+
         public static function getPostOrderByFields() {
 
             $keys = array(
@@ -277,6 +283,12 @@
 
 
         }
+
+        /**
+         * Get all post meta keys
+         *
+         * @return array
+         */
 
         public static function getAllPostMetaKeys() {
 

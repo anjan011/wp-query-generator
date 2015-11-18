@@ -95,7 +95,7 @@
 ?>
 <div class="wrap" id="<?= $idPrefix.$main->get_config( 'html/ids/generator_container' ) ?>">
 
-    <h2>WP_Query Generator</h2>
+    <h2>WP_Query Parameters Generator</h2>
 
     <form action="" method="POST" class="form-horizontal" role="form"
           id="<?= $idPrefix.$main->get_config( 'html/ids/generator_form' ) ?>">
