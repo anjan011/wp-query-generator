@@ -19,7 +19,7 @@
                     <option value="any">Any Type</option>
                     <?php foreach ( $post_types as $type ): ?>
                         <option value="<?= $type ?>"
-                                <?php if (wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_type', 'post' ) == $type): ?>selected<?php endif; ?>><?= $type ?></option>
+                                <?php if (meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_type', 'post' ) == $type): ?>selected<?php endif; ?>><?= $type ?></option>
                     <?php endforeach; ?>
                 </select>
             </label>
@@ -32,7 +32,7 @@
                 <strong>Post ID (#p)</strong>Get entries by selected post id<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => 'post',
                         'nopaging'    => TRUE,
                         'empty_value' => array(
@@ -46,7 +46,7 @@
                             'id'    => 'post_id',
                             'class' => 'chosen',
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_id' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_id' ),
                     ) );
                 ?>
             </label>
@@ -58,7 +58,7 @@
                 <strong>Post Slug (#name)</strong>Get entries by selected post slug<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => 'post',
                         'nopaging'    => TRUE,
                         'empty_value' => array(
@@ -72,7 +72,7 @@
                             'id'    => 'post_slug',
                             'class' => 'chosen',
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_slug' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_slug' ),
                     ) );
                 ?>
             </label>
@@ -85,7 +85,7 @@
                 <strong>Page ID (#p)</strong>Get entries by selected post id<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => 'page',
                         'nopaging'    => TRUE,
                         'empty_value' => array(
@@ -99,7 +99,7 @@
                             'id'    => 'page_id',
                             'class' => 'chosen',
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/page_id' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/page_id' ),
                     ) );
                 ?>
             </label>
@@ -111,7 +111,7 @@
                 <strong>Post Slug (#name)</strong>Get entries by selected post slug<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => 'page',
                         'nopaging'    => TRUE,
                         'empty_value' => array(
@@ -125,7 +125,7 @@
                             'id'    => 'page_slug',
                             'class' => 'chosen',
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/page_slug' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/page_slug' ),
                     ) );
                 ?>
             </label>

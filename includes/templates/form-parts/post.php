@@ -10,7 +10,7 @@
 
                     asort( $post_status_list );
 
-                    $selectedPostStatus = wqg_utils::array_value_as_array($wqgData,'post/post_status',array('publish'));
+                    $selectedPostStatus = meAnjanWqg_Utils::arrayValueAsArray($wqgData,'post/post_status',array('publish'));
 
                 ?>
 
@@ -37,7 +37,7 @@
 
                     asort( $post_types );
 
-                    $selectedPostTypes = wqg_utils::array_value_as_array($wqgData,'post/post_type',array('post'));
+                    $selectedPostTypes = meAnjanWqg_Utils::arrayValueAsArray($wqgData,'post/post_type',array('post'));
 
                 ?>
 
@@ -58,7 +58,7 @@
                 <strong>Post ID (#p)</strong>Get posts by id<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => $selectedPostTypes,
                         'nopaging'    => TRUE,
                         /*'empty_value' => array(
@@ -75,7 +75,7 @@
                             'multiple' => 'multiple',
                             'data-placeholder' => 'Select one or more posts'
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_id' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_id' ),
                     ) );
                 ?>
             </label>
@@ -88,7 +88,7 @@
                 <strong>Exclude Post ID (#post__not_in)</strong>Exclude selected posts<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => $selectedPostTypes,
                         'nopaging'    => TRUE,
                         'label_field' => 'post_title',
@@ -101,7 +101,7 @@
                             'multiple' => 'multiple',
                             'data-placeholder' => 'Select one or more posts'
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_id_not_in' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_id_not_in' ),
                     ) );
                 ?>
             </label>
@@ -114,7 +114,7 @@
                 <strong>Post Slug (#name)</strong>Get entries by selected post slug<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => $selectedPostTypes,
                         'nopaging'    => TRUE,
                         'empty_value' => array(
@@ -129,7 +129,7 @@
                             'class' => 'chosen',
                             'data-placeholder' => 'Select one or more posts'
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_slug' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_slug' ),
                     ) );
                 ?>
             </label>
@@ -142,7 +142,7 @@
                 <strong>Parent Post (#post_parent)</strong>Get child posts<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => $selectedPostTypes,
                         'nopaging'    => TRUE,
                         'label_field' => 'post_title',
@@ -155,7 +155,7 @@
                             'data-placeholder' => 'Select one or more posts',
                             'multiple' => 'multiple'
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_parent' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_parent' ),
                     ) );
                 ?>
             </label>
@@ -168,7 +168,7 @@
                 <strong>Exclude Parent Posts (#post_parent__not_in)</strong>Exclude posts with these parent posts<br/>
 
                 <?php
-                    echo wqg_posts::posts_dropdown( array(
+                    echo meAnjanWqg_Posts::postsDropdown( array(
                         'post_type'   => $selectedPostTypes,
                         'nopaging'    => TRUE,
                         'label_field' => 'post_title',
@@ -181,7 +181,7 @@
                             'data-placeholder' => 'Select one or more posts',
                             'multiple' => 'multiple'
                         ),
-                        'selected'    => wqg_utils::__ARRAY_VALUE( $wqgData, 'post/post_parent_not_in' ),
+                        'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_parent_not_in' ),
                     ) );
                 ?>
             </label>

@@ -6,7 +6,7 @@
      * Date: 9/15/15
      * Time: 11:59 AM
      */
-    class wqg_utils {
+    class meAnjanWqg_Utils {
 
         /**
          * Directly prints/returns a value from $_POST
@@ -20,7 +20,7 @@
 
         public static function post( $key, $default = NULL, $return = TRUE ) {
 
-            $data = self::__ARRAY_VALUE( $_POST, $key, $default );
+            $data = self::arrayValue( $_POST, $key, $default );
 
             if ( $return ) {
                 return $data;
@@ -42,7 +42,7 @@
          * @return mixed
          */
 
-        public static function __ARRAY_VALUE( $array, $key, $default = NULL ) {
+        public static function arrayValue( $array, $key, $default = NULL ) {
 
             if ( !is_array( $array ) ) {
                 return $default;
@@ -76,7 +76,7 @@
 
         public static function get( $key, $default = NULL, $return = TRUE ) {
 
-            $data = self::__ARRAY_VALUE( $_GET, $key, $default );
+            $data = self::arrayValue( $_GET, $key, $default );
 
             if ( $return ) {
                 return $data;
@@ -98,7 +98,7 @@
 
         public static function session( $key, $default = NULL, $return = TRUE ) {
 
-            $data = self::__ARRAY_VALUE( $_SESSION, $key, $default );
+            $data = self::arrayValue( $_SESSION, $key, $default );
 
             if ( $return ) {
                 return $data;
@@ -120,7 +120,7 @@
 
         public static function server( $key, $default = NULL, $return = TRUE ) {
 
-            $data = self::__ARRAY_VALUE( $_SERVER, $key, $default );
+            $data = self::arrayValue( $_SERVER, $key, $default );
 
             if ( $return ) {
                 return $data;
@@ -142,7 +142,7 @@
 
         public static function cookie( $key, $default = NULL, $return = TRUE ) {
 
-            $data = self::__ARRAY_VALUE( $_COOKIE, $key, $default );
+            $data = self::arrayValue( $_COOKIE, $key, $default );
 
             if ( $return ) {
                 return $data;
@@ -188,15 +188,15 @@
          * @param bool   $multiple
          */
 
-        public static function selected_attr($source = array(),$key = '',$value_to_match = '',$multiple = false) {
+        public static function selectedAttr( $source = array(), $key = '', $value_to_match = '', $multiple = false) {
 
             if(!$multiple) {
-                if(self::__ARRAY_VALUE($source,$key) == $value_to_match) {
+                if(self::arrayValue($source,$key) == $value_to_match) {
                     echo 'selected';
                 }
             } else {
 
-                $values = self::__ARRAY_VALUE($source,$key);
+                $values = self::arrayValue($source,$key);
 
                 if(!is_array($values)) {
                     $values = array();
@@ -220,7 +220,7 @@
          * @return bool|string|void
          */
 
-        public static function wp_ajax_url($action = '',$extra_params = array()) {
+        public static function wpAjaxUrl( $action = '', $extra_params = array()) {
 
             $action = trim($action);
 
@@ -242,7 +242,7 @@
          * @param array $data
          */
 
-        public static function save_data($data = array()) {
+        public static function saveData( $data = array()) {
 
             $key = 'me_anjan_plugins_wqg_data';
 
@@ -256,7 +256,7 @@
          * @return mixed|void
          */
 
-        public static function get_data() {
+        public static function getData() {
 
             $key = 'me_anjan_plugins_wqg_data';
 
@@ -275,9 +275,9 @@
          * @return int|mixed
          */
 
-        public static function array_value_as_int($array = array(),$key = '',$default = 0,$callback = null) {
+        public static function arrayValueAsInt( $array = array(), $key = '', $default = 0, $callback = null) {
 
-            $value = (int)self::__ARRAY_VALUE($array,$key,$default);
+            $value = (int)self::arrayValue($array,$key,$default);
 
             if(is_callable($callback)) {
                 return call_user_func($callback,$value);
@@ -298,9 +298,9 @@
          * @return int|mixed
          */
 
-        public static function array_value_as_float($array = array(),$key = '',$default = 0,$callback = null) {
+        public static function arrayValueAsFloat( $array = array(), $key = '', $default = 0, $callback = null) {
 
-            $value = (float)self::__ARRAY_VALUE($array,$key,$default);
+            $value = (float)self::arrayValue($array,$key,$default);
 
             if(is_callable($callback)) {
                 return call_user_func($callback,$value);
@@ -321,9 +321,9 @@
          * @return int|mixed
          */
 
-        public static function array_value_as_array($array = array(),$key = '',$default = 0,$callback = null) {
+        public static function arrayValueAsArray( $array = array(), $key = '', $default = 0, $callback = null) {
 
-            $value = self::__ARRAY_VALUE($array,$key,$default);
+            $value = self::arrayValue($array,$key,$default);
 
             if(!is_array($value)) {
                 $value = array();
@@ -348,9 +348,9 @@
          * @return mixed|string
          */
 
-        public static function array_value_as_string($array = array(),$key = '',$default = '',$callback = null) {
+        public static function arrayValueAsString( $array = array(), $key = '', $default = '', $callback = null) {
 
-            $value = self::__ARRAY_VALUE($array,$key,$default);
+            $value = self::arrayValue($array,$key,$default);
 
             if(!is_string($value)) {
                 $value = '';
@@ -364,7 +364,15 @@
 
         }
 
-        public static function is_min_wp_version($version = '') {
+        /**
+         * Is current wordpress version greater or equal to given version?
+         *
+         * @param string $version
+         *
+         * @return bool|mixed
+         */
+
+        public static function isMinWpVersion( $version = '') {
 
             $version = trim($version);
 

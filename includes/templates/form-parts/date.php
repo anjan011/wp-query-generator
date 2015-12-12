@@ -4,7 +4,7 @@
             <label>
                 <strong>Year (#year)</strong>Entries posted in the year<br />
 
-                <input type="text" name="date[year]" value="<?= stripslashes(wqg_utils::array_value_as_string($wqgData,'date/year',''))?>" >
+                <input type="text" name="date[year]" value="<?= stripslashes(meAnjanWqg_Utils::arrayValueAsString($wqgData,'date/year',''))?>" >
             </label>
         </td>
     </tr>
@@ -14,7 +14,7 @@
             <label>
                 <strong>Month (#monthnum)</strong>Posted in the month<br />
 
-                <input type="text" name="date[monthnum]" value="<?= stripslashes(wqg_utils::array_value_as_string($wqgData,'date/monthnum',''))?>" >
+                <input type="text" name="date[monthnum]" value="<?= stripslashes(meAnjanWqg_Utils::arrayValueAsString($wqgData,'date/monthnum',''))?>" >
             </label>
         </td>
     </tr>
@@ -24,7 +24,7 @@
             <label>
                 <strong>Week (#week)</strong>Posted in the week<br />
 
-                <input type="text" name="date[week]" value="<?= stripslashes(wqg_utils::array_value_as_string($wqgData,'date/week',''))?>" >
+                <input type="text" name="date[week]" value="<?= stripslashes(meAnjanWqg_Utils::arrayValueAsString($wqgData,'date/week',''))?>" >
             </label>
         </td>
     </tr>
@@ -34,7 +34,7 @@
             <label>
                 <strong>Day (#day)</strong>Posted in the day<br />
 
-                <input type="text" name="date[day]" value="<?= stripslashes(wqg_utils::array_value_as_string($wqgData,'date/day',''))?>" >
+                <input type="text" name="date[day]" value="<?= stripslashes(meAnjanWqg_Utils::arrayValueAsString($wqgData,'date/day',''))?>" >
             </label>
         </td>
     </tr>
@@ -44,7 +44,7 @@
             <label>
                 <strong>Hour (#hour)</strong>Posted in the hour<br />
 
-                <input type="text" name="date[hour]" value="<?= stripslashes(wqg_utils::array_value_as_string($wqgData,'date/hour',''))?>" >
+                <input type="text" name="date[hour]" value="<?= stripslashes(meAnjanWqg_Utils::arrayValueAsString($wqgData,'date/hour',''))?>" >
             </label>
         </td>
     </tr>
@@ -54,7 +54,7 @@
             <label>
                 <strong>Minute (#minute)</strong>Posted in the minute<br />
 
-                <input type="text" name="date[minute]" value="<?= stripslashes(wqg_utils::array_value_as_string($wqgData,'date/minute',''))?>" >
+                <input type="text" name="date[minute]" value="<?= stripslashes(meAnjanWqg_Utils::arrayValueAsString($wqgData,'date/minute',''))?>" >
             </label>
         </td>
     </tr>
@@ -64,7 +64,7 @@
             <label>
                 <strong>Second (#second)</strong>Posted in the second<br />
 
-                <input type="text" name="date[second]" value="<?= stripslashes(wqg_utils::array_value_as_string($wqgData,'date/second',''))?>" >
+                <input type="text" name="date[second]" value="<?= stripslashes(meAnjanWqg_Utils::arrayValueAsString($wqgData,'date/second',''))?>" >
             </label>
         </td>
     </tr>

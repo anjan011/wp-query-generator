@@ -40,6 +40,10 @@
 
         html.push('<div id="' + block_id + '" class="me-anjan-wqg-tax-block">');
 
+        /* close button */
+
+        html.push('<span class="dashicons dashicons-dismiss"></span>');
+
         html.push('<label>');
 
         html.push('<span>Taxonomy:</span>');
@@ -143,8 +147,6 @@
         html.push('</label>');
 
         html.push('<label>');
-
-        html.push('<input type="button" class="me-anjan-wqg-remove-tax-block" value="Remove" >');
 
         html.push('</label>');
 
@@ -287,8 +289,8 @@
     }
 
     $taxQueryBlock
-        .off('click', '.me-anjan-wqg-remove-tax-block')
-        .on('click', '.me-anjan-wqg-remove-tax-block', function () {
+        .off('click', '.dashicons-dismiss')
+        .on('click', '.dashicons-dismiss', function () {
 
             if (confirm ('Remove this block?')) {
                 $ (this).parents('.me-anjan-wqg-tax-block').remove();

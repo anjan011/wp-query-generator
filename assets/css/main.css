@@ -174,6 +174,7 @@
     #me-anjan-wqg-form .me-anjan-wqg-tax-query-block .left, #me-anjan-wqg-form .me-anjan-wqg-tax-query-block .right {
       width: 100%; } }
   #me-anjan-wqg-form .me-anjan-wqg-tax-query-block .me-anjan-wqg-tax-block {
+    position: relative;
     background-color: #fbd2cd;
     margin-bottom: 10px;
     padding: 5px;
@@ -198,6 +199,13 @@
     #me-anjan-wqg-form .me-anjan-wqg-tax-query-block .me-anjan-wqg-tax-block textarea {
       width: 100%;
       margin-bottom: 5px; }
+    #me-anjan-wqg-form .me-anjan-wqg-tax-query-block .me-anjan-wqg-tax-block .dashicons-dismiss {
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      cursor: pointer; }
+      #me-anjan-wqg-form .me-anjan-wqg-tax-query-block .me-anjan-wqg-tax-block .dashicons-dismiss:hover {
+        color: red; }
   #me-anjan-wqg-form .button-primary.red {
     background-color: indianred;
     box-shadow: #d98383 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.14902) 0px 1px 0px 0px;
@@ -292,5 +300,48 @@
     cursor: pointer; }
     .me-anjan-wqg-date-criteria-box .dashicons-dismiss:hover {
       color: red; }
+
+.me-anjan-wqg-meta-criteria-box {
+  position: relative;
+  background-color: #fbd2cd;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  float: left; }
+  @media screen and (min-width: 768px) {
+    .me-anjan-wqg-meta-criteria-box {
+      width: 48%;
+      margin: 1%; } }
+  @media screen and (min-width: 1024px) {
+    .me-anjan-wqg-meta-criteria-box {
+      width: 23%;
+      margin: 1%; } }
+  .me-anjan-wqg-meta-criteria-box label {
+    margin-top: 2px !important;
+    display: block;
+    width: 100%; }
+    .me-anjan-wqg-meta-criteria-box label span {
+      display: block;
+      margin-bottom: 2px; }
+    .me-anjan-wqg-meta-criteria-box label select {
+      width: 100% !important; }
+    .me-anjan-wqg-meta-criteria-box label input[type=text] {
+      width: 100%; }
+  .me-anjan-wqg-meta-criteria-box textarea {
+    width: 100%;
+    margin-bottom: 5px; }
+  .me-anjan-wqg-meta-criteria-box .dashicons-dismiss {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    cursor: pointer; }
+    .me-anjan-wqg-meta-criteria-box .dashicons-dismiss:hover {
+      color: red; }
+
+#me-anjan-wqg-btn-reset-data {
+  float: right; }
+
+.chosen-single span {
+  color: #FF00B8; }
 
 /*# sourceMappingURL=main.css.map */

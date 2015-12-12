@@ -37,7 +37,7 @@
 
     /* Plugin dir url */
 
-    define ( 'ME_ANJAN_PLUGIN_WQG_URL', plugin_dir_url ( __FILE__ ) );
+    define ( 'ME_ANJAN_WQG_URL_ROOT', plugin_dir_url ( __FILE__ ) );
 
     /* Auto Load Classes */
 
@@ -57,4 +57,4 @@
 
     /* Start the process */
 
-    wqg_main::get_instance ()->init ();
+    meAnjanWqg_Main::getInstance ()->init ();

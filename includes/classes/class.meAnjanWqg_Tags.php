@@ -6,7 +6,7 @@
      * Date: 9/24/15
      * Time: 6:15 PM
      */
-    class wqg_tags {
+    class meAnjanWqg_Tags {
 
         /**
          * get all tags
@@ -15,7 +15,7 @@
          * @return array
          */
 
-        public static function get_tags() {
+        public static function getTags() {
 
 
 
@@ -43,11 +43,11 @@
          * @return string
          */
 
-        public static function tags_dropdown($params = array()) {
+        public static function tagsDropdown( $params = array()) {
 
-            $attributes = wqg_utils::__ARRAY_VALUE($params,'attributes',array());
+            $attributes = meAnjanWqg_Utils::arrayValue($params,'attributes',array());
 
-            $selected = wqg_utils::__ARRAY_VALUE($params,'selected','');
+            $selected = meAnjanWqg_Utils::arrayValue($params,'selected','');
 
 
 
@@ -65,7 +65,7 @@
 
             $html .= '>';
 
-            $empty_value = wqg_utils::__ARRAY_VALUE($params,'empty_value',false);
+            $empty_value = meAnjanWqg_Utils::arrayValue($params,'empty_value',false);
 
             if(is_array($empty_value) && isset($empty_value['label']) && isset($empty_value['value'])) {
 
@@ -73,17 +73,17 @@
 
             }
 
-            $tags = self::get_tags(0);
+            $tags = self::getTags(0);
 
             if(is_array($tags) && count($tags) > 0) {
 
                 foreach($tags as $t) {
 
-                    $html .= self::generate_tag_option(array(
+                    $html .= self::generateTagOption(array(
                         'tag' => $t,
                         'selected' => $selected,
-                        'label_field' => wqg_utils::__ARRAY_VALUE($params,'label_field','name'),
-                        'value_field' => wqg_utils::__ARRAY_VALUE($params,'value_field','term_id'),
+                        'label_field' => meAnjanWqg_Utils::arrayValue($params,'label_field','name'),
+                        'value_field' => meAnjanWqg_Utils::arrayValue($params,'value_field','term_id'),
                         'indent' => 0
                     ));
 
@@ -98,16 +98,16 @@
         }
 
         /**
-         * Generates <option> tag for a tag
+         * Generates <option> html tag for a tag
          *
          * @param array $params
          *
          * @return bool|string
          */
 
-        public static function generate_tag_option( $params = array()) {
+        public static function generateTagOption( $params = array()) {
 
-            $tag = wqg_utils::__ARRAY_VALUE($params,'tag',false);
+            $tag = meAnjanWqg_Utils::arrayValue($params,'tag',false);
 
             if(!is_object($tag)) {
                 return false;
@@ -115,10 +115,10 @@
 
 
 
-            $label_field = wqg_utils::__ARRAY_VALUE($params,'label_field','name');
-            $value_field = wqg_utils::__ARRAY_VALUE($params,'value_field','term_id');
+            $label_field = meAnjanWqg_Utils::arrayValue($params,'label_field','name');
+            $value_field = meAnjanWqg_Utils::arrayValue($params,'value_field','term_id');
 
-            $indent = (int)wqg_utils::__ARRAY_VALUE($params,'indent',0);
+            $indent = (int)meAnjanWqg_Utils::arrayValue($params,'indent',0);
 
             $label = isset($tag->$label_field) ? $tag->$label_field : '';
             $value = isset($tag->$value_field) ? $tag->$value_field : '';
@@ -129,7 +129,7 @@
 
             $selected_attr = '';
 
-            $selected = wqg_utils::__ARRAY_VALUE($params,'selected','');
+            $selected = meAnjanWqg_Utils::arrayValue($params,'selected','');
 
             if(is_array($selected) && in_array($value,$selected)) {
                 $selected_attr = ' selected';

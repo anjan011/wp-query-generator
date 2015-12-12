@@ -517,6 +517,10 @@ _.mixin ({
 
                 $ ('#' + $link.attr ('href').substr (1)).addClass ('active');
 
+
+
+                $('.wqgCurrentTab').val($link.attr('id'));
+
                 return false;
 
             });
@@ -632,8 +636,7 @@ _.mixin ({
                             $select.val($select.data('lastValue'));
 
                             $select.trigger('chosen:updated');
-                        },
-                        blankElement   : '<option value=""><option>'
+                        }
                     });
 
                 },
@@ -975,6 +978,177 @@ _.mixin ({
         for (var i = 0; i < loopCount1; i += 1) {
 
             appendDateCriteriaBox(i,meAnjanWqgDateQueryCriterias[i]);
+
+        }
+
+    }
+
+    /*********************************************************************
+     * By: Anjan @ Nov 26, 2015 2:30 PM
+     *********************************************************************
+     * Meta criteria box
+     *********************************************************************/
+
+
+    function getMetaQueryCriteriaBlockId() {
+        return $('#me-anjan-wqg-meta-query-block').find('.me-anjan-wqg-meta-criteria-box').length + 1;
+    }
+
+    function generateHtmlForMetaQueryCriteriaBlock(blockId,values) {
+
+        values = _.isPlainObject(values) ? values : {};
+
+        blockId = $.trim(blockId);
+
+        if(blockId == '') {
+            blockId = getMetaQueryCriteriaBlockId();
+        }
+
+        var htmlId = 'me-anjan-wqg-meta-criteria-box-' + blockId;
+
+        var html = [];
+
+        html.push('<div class="me-anjan-wqg-meta-criteria-box" id="' + htmlId + '">');
+
+        html.push('<span class="dashicons dashicons-dismiss"></span>');
+
+        html.push('<label>');
+        html.push('<span>Meta Key</span>');
+
+        html.push('<select name="meta_query[queries][' + blockId + '][key]">');
+
+        if(_.has(window,'meAnjanWqgPostMetaList') && _.isArray(window.meAnjanWqgPostMetaList)) {
+
+            var loopCount1 = meAnjanWqgPostMetaList.length;
+
+
+            var key = _.objValueAsString(values,'key','');
+
+            for (var i = 0; i < loopCount1; i += 1) {
+
+                var m = meAnjanWqgPostMetaList[i];
+
+                html.push('<option value="' + m + '" ' + (key == m ? 'selected':'') + '>' + m + '<option>');
+
+            }
+
+        }
+
+        html.push('</select>');
+
+
+
+        html.push('</label>');
+
+        // compare types
+
+        var metaCompareTypes = [ '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN', 'BETWEEN', 'NOT BETWEEN', 'EXISTS', 'NOT EXISTS' ];
+
+
+
+        html.push('<label>');
+        html.push('<span>Compare Type</span>');
+
+        html.push('<select name="meta_query[queries][' + blockId + '][compare]" size="1">');
+
+        var compare = _.objValueAsString(values,'compare','=');
+
+        var metaCompareLen = metaCompareTypes.length;
+
+        for (var j = 0; j < metaCompareLen; j += 1) {
+
+            var mc = metaCompareTypes[j];
+
+            html.push('<option value="' + mc + '" ' + (mc == compare ? 'selected' : '') + '>' + mc + '</option>');
+
+        }
+
+        html.push('</select>');
+
+        html.push('</label>');
+
+        html.push('<label>');
+        html.push('<span>Meta Value</span>');
+        html.push('<textarea name="meta_query[queries][' + blockId + '][value]" rows="5">' + _.objValueAsString(values,'value','') + '</textarea>');
+        html.push('</label>');
+
+        // meta value types
+
+        var metaValueTypes = ['NUMERIC', 'BINARY', 'CHAR', 'DATE', 'DATETIME', 'DECIMAL', 'SIGNED', 'TIME', 'UNSIGNED'];
+
+        html.push('<label>');
+        html.push('<span>Meta Value Type</span>');
+
+        html.push('<select name="meta_query[queries][' + blockId + '][type]" size="1">');
+
+        var type = _.objValueAsString(values,'type','CHAR');
+
+        var valueTypesLen = metaValueTypes.length;
+
+        for (var k = 0; k < valueTypesLen; k += 1) {
+
+            var vt = metaValueTypes[k];
+
+            html.push('<option value="' + vt + '" ' + (vt == type ? 'selected' : '') + '>' + vt + '</option>');
+
+        }
+
+        html.push('</select>');
+        html.push('</label>');
+        html.push('</div>');
+
+        return {
+            html : html.join(''),
+            htmlId : htmlId
+        };
+
+    }
+
+    function appendMetaQueryCriteriaBox(blockId,values) {
+
+        var data = generateHtmlForMetaQueryCriteriaBlock(blockId,values);
+
+        var html = _.objValueAsString(data,'html','');
+
+        var blockhtmlId = $.trim(_.objValueAsString(data,'htmlId',''));
+
+        if(blockhtmlId != '') {
+
+            $metaQueryCriteriaContainer.append(html);
+
+            var $block = $('#' + blockhtmlId);
+
+            $block.find('select').chosen(chosenParams);
+
+            $block.on('click','.dashicons-dismiss',function() {
+
+                if(!confirm('Remove this block?')) {
+                    return false;
+                }
+
+                $(this).parent().remove();
+
+            });
+
+        }
+
+    }
+
+    var $metaQueryCriteriaContainer = $('#me-anjan-wqg-meta-query-block');
+
+    $mainContainer.on('click','#me-anjan-wqg-add-meta-query',function() {
+
+        appendMetaQueryCriteriaBox('',{});
+
+    });
+
+    if(_.has(window,'meAnjanWqgMetaQueryCriterias') && _.isArray(meAnjanWqgMetaQueryCriterias)) {
+
+        var loopCount1 = meAnjanWqgMetaQueryCriterias.length;
+
+        for (var i = 0; i < loopCount1; i += 1) {
+
+            appendMetaQueryCriteriaBox(i,meAnjanWqgMetaQueryCriterias[i]);
 
         }
 

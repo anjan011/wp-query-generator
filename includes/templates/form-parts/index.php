@@ -1,10 +1,10 @@
 <?php
 
-    $main = wqg_main::get_instance();
+    $main = meAnjanWqg_Main::getInstance();
 
-    $idPrefix = $main->get_config( 'idPrefix' );
+    $idPrefix = $main->getConfig( 'idPrefix' );
 
-    $wqgData = wqg_utils::get_data();
+    $wqgData = meAnjanWqg_Utils::getData();
 
     if ( empty($wqgData) ) {
         $wqgData = array();
@@ -12,7 +12,7 @@
 
     $current_dir = dirname( __FILE__ ).DIRECTORY_SEPARATOR;
 
-    $main = wqg_main::get_instance();
+    $main = meAnjanWqg_Main::getInstance();
 
     $tabs = array(
         array(
@@ -52,18 +52,9 @@
             'slug'   => 'post',
             'active' => FALSE,
         ),
-        array(
-            'id'     => $idPrefix.'tab-pagination',
-            'label'  => 'Pagination',
-            'slug'   => 'pagination',
-            'active' => FALSE,
-        ),
-        array(
-            'id'     => $idPrefix.'tab-sorting',
-            'label'  => 'Sorting',
-            'slug'   => 'sorting',
-            'active' => FALSE,
-        ),
+
+
+
         array(
             'id'     => $idPrefix.'tab-date',
             'label'  => 'Date (Simple)',
@@ -76,29 +67,54 @@
             'slug'   => 'date-query',
             'active' => FALSE,
         ),
+
         array(
             'id'     => $idPrefix.'tab-meta',
-            'label'  => 'Meta/Custom Fields',
+            'label'  => 'Meta/Custom Field',
             'slug'   => 'meta',
+            'active' => FALSE,
+        ),
+
+        array(
+            'id'     => $idPrefix.'tab-meta-query',
+            'label'  => 'Meta Query',
+            'slug'   => 'meta-query',
+            'active' => FALSE,
+        ),
+
+        array(
+            'id'     => $idPrefix.'tab-sorting',
+            'label'  => 'Sorting',
+            'slug'   => 'sorting',
+            'active' => FALSE,
+        ),
+        array(
+            'id'     => $idPrefix.'tab-pagination',
+            'label'  => 'Pagination',
+            'slug'   => 'pagination',
             'active' => FALSE,
         ),
     );
 
+    $currentTab = trim(meAnjanWqg_Utils::arrayValue( $wqgData, 'currentTab' ));
+
+    if($currentTab == '') {
+        $currentTab = $idPrefix.'tab-author';
+    }
 
     foreach ( $tabs as &$t ) {
 
-        $t[ 'active' ] = wqg_utils::__ARRAY_VALUE( $wqgData, 'currentTab', $idPrefix.'tab-author' ) == $t[ 'id' ];
+        $t[ 'active' ] = ($currentTab == $t[ 'id' ]);
 
     }
 
-
 ?>
-<div class="wrap" id="<?= $idPrefix.$main->get_config( 'html/ids/generator_container' ) ?>">
+<div class="wrap" id="<?= $idPrefix.$main->getConfig( 'html/ids/generator_container' ) ?>">
 
     <h2>WP_Query Parameters Generator</h2>
 
     <form action="" method="POST" class="form-horizontal" role="form"
-          id="<?= $idPrefix.$main->get_config( 'html/ids/generator_form' ) ?>">
+          id="<?= $idPrefix.$main->getConfig( 'html/ids/generator_form' ) ?>">
 
         <div class="me-anjan-wqg-tabpanel horizontal">
             <ul class="me-anjan-wqg-tab-buttons clearfix" role="tablist">
@@ -155,11 +171,11 @@
                                        value="generate-code">
 
                                 <input type="hidden" class="wqgCurrentTab" name="currentTab"
-                                       value="<?= wqg_utils::__ARRAY_VALUE( $wqgData, 'currentTab' ) ?>"/>
+                                       value="<?= meAnjanWqg_Utils::arrayValue( $wqgData, 'currentTab' ) ?>"/>
 
                                 <button type="submit" class="button-primary">Save &amp; Generate</button>
 
-                                <button type="button" id="<?= $idPrefix.$main->get_config( 'html/ids/reset_button' ) ?>"
+                                <button type="button" id="<?= $idPrefix.$main->getConfig( 'html/ids/reset_button' ) ?>"
                                         class="button-primary red" name="reset_wqg_data">Reset
                                 </button>
                             </div>

@@ -7,7 +7,7 @@ Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin generates WP_Query code from a list of supported parameters and lets the user preview data based on the parameters provided.
+This plugin generates WP_Query parameters code from a list of supported parameters and lets the user preview data based on the parameters provided.
 
 == Description ==
 
@@ -32,6 +32,11 @@ Once activated you can then access the plugin fetures through Tools > WP_query g
 1. Screenshot 1: Showing the parameters UI
 2. Screenshot 2: Showing the generated codes sample
 3. Screenshot 3: Displaying sample data preview
+
+== Upgrade Notice ==
+
+= 1.0 =
+This is the insitial version. Newer versions with any fixes applied or featured added will be listed here.
 
 == Support ==
 

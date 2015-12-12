@@ -6,7 +6,7 @@
      * Time: 5:49 PM
      */
 
-    $criteriaData = wqg_utils::array_value_as_array($wqgData,'date_query/criteria',array());
+    $criteriaData = meAnjanWqg_Utils::arrayValueAsArray($wqgData,'date_query/criteria',array());
 
     $criteriaData = array_values($criteriaData); // to force json array
 
@@ -23,7 +23,7 @@
                 <?php
                     $dateQueryRelations = array('and','or');
 
-                    $selectedRelation = wqg_utils::array_value_as_string(
+                    $selectedRelation = meAnjanWqg_Utils::arrayValueAsString(
                         $wqgData,
                         'date_query/relation',
                         'and',

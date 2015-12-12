@@ -299,6 +299,7 @@
     }
 
     .me-anjan-wqg-tax-block {
+      position: relative;
       background-color: #fbd2cd;
       margin-bottom: 10px;
       padding: 5px;
@@ -337,6 +338,17 @@
         width: 100%;
 
         margin-bottom: 5px;
+      }
+
+      .dashicons-dismiss {
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        cursor: pointer;
+
+        &:hover {
+          color: red;
+        }
       }
 
     }
@@ -483,4 +495,74 @@
     }
   }
 
+}
+
+.me-anjan-wqg-meta-criteria-box {
+  position: relative;
+  background-color: #fbd2cd;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  float: left;
+
+  @media screen and (min-width: 768px) {
+    width: 48%;
+    margin: 1%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 23%;
+    margin: 1%;
+  }
+
+  label {
+
+    margin-top: 2px !important;
+    display: block;
+    width: 100%;
+
+    span {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    select {
+
+      width: 100% !important;
+
+    }
+
+    input[type=text] {
+      width: 100%;
+    }
+
+  }
+
+  textarea {
+    width: 100%;
+
+    margin-bottom: 5px;
+  }
+
+  .dashicons-dismiss {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    cursor: pointer;
+
+    &:hover {
+      color: red;
+    }
+  }
+
+}
+
+#me-anjan-wqg-btn-reset-data {
+  float: right;
+}
+
+.chosen-single {
+  span {
+    color: #FF00B8;
+  }
 }

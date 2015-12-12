@@ -1,4 +1,4 @@
-<div class="me-anjan-wqg-output-block" id="<?= $idPrefix.$main->get_config( 'html/ids/generator_output' ) ?>">
+<div class="me-anjan-wqg-output-block" id="<?= $idPrefix.$main->getConfig( 'html/ids/generator_output' ) ?>">
 
     <p class="me-anjan-wqg-code-help clearfix">
         Double click on anywhere in the code to select and copy <button type="button" class="button-secondary me-anjan-wqg-btn-preview">Preview
@@ -7,7 +7,7 @@
     </p>
 
     <?php
-        $gen = new wqg_generator( $wqgData );
+        $gen = new meAnjanWqg_Generator( $wqgData );
         $generatedCode = $gen->generateCode();
 
         $generatedCode = str_replace('<','&lt;',$generatedCode);

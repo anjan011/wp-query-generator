@@ -6,40 +6,40 @@
      * Date: 10/11/15
      * Time: 10:44 PM
      */
-    class wqg_taxonomies {
+    class meAnjanWqg_Taxonomies {
 
         /**
-         * get list of taxonomies
+         * Get list of taxonomies
          *
          * @param array $params
          *
          * @return array
          */
 
-        public static function get_taxonomies($params = array()) {
+        public static function getTaxonomies( $params = array()) {
 
             $params = isset($params) ? $params : array();
 
-            $args = wqg_utils::__ARRAY_VALUE($params,'args');
-            $output = wqg_utils::__ARRAY_VALUE($params,'output','names');
-            $operator = wqg_utils::__ARRAY_VALUE($params,'operator','and');
+            $args = meAnjanWqg_Utils::arrayValue($params,'args');
+            $output = meAnjanWqg_Utils::arrayValue($params,'output','names');
+            $operator = meAnjanWqg_Utils::arrayValue($params,'operator','and');
 
             return get_taxonomies($args,$output,$operator);
 
         }
 
         /**
-         * get taxonomy terms
+         * Get taxonomy terms
          *
          * @param array $params
          *
          * @return array|WP_Error
          */
 
-        public static function get_all_terms($params = array()) {
+        public static function getAllTerms( $params = array()) {
 
-            $taxonomy = wqg_utils::array_value_as_string($params,'taxonomy','','trim');
-            $field = wqg_utils::array_value_as_string($params,'field','','trim');
+            $taxonomy = meAnjanWqg_Utils::arrayValueAsString($params,'taxonomy','','trim');
+            $field = meAnjanWqg_Utils::arrayValueAsString($params,'field','','trim');
 
             if($field == '') {
                 $field = 'term_id';

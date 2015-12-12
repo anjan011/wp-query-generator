@@ -6,7 +6,7 @@
  * Time: 5:24 PM
  */
 
-class wqg_main {
+class meAnjanWqg_Main {
 
     /**
      * Holds config data
@@ -17,7 +17,7 @@ class wqg_main {
     private $_config = array();
 
     /**
-     * @var self
+     * @var meAnjanWqg_Main
      */
 
     private static $_instance = null;
@@ -33,10 +33,10 @@ class wqg_main {
     /**
      * Get the instance
      *
-     * @return wqg_main
+     * @return meAnjanWqg_Main
      */
 
-    public static function get_instance() {
+    public static function getInstance() {
 
         if(self::$_instance === NULL) {
             self::$_instance = new self();
@@ -51,25 +51,43 @@ class wqg_main {
 
     public function init() {
 
-        $this->load_config();
+        /**
+         * Load config
+         */
+
+        $this->loadConfig();
 
         /**
          * Add actions
          */
 
-        $actions = new wqg_actions();
+        $actions = new meAnjanWqg_Actions();
 
         $actions->init();
+
+        /**
+         * Add Filters
+         */
+
+        $filters = new meAnjanWqg_Filters();
+
+        $filters->init();
 
     }
 
     /**
-     * Load config from file
+     * Load config from file and save into _config
      */
 
-    public function load_config() {
+    public function loadConfig() {
 
-        $this->_config = require(ME_ANJAN_PLUGIN_WQG_DIR.'config.php');
+        $configFile = ME_ANJAN_PLUGIN_WQG_DIR.'config.php';
+
+        if(file_exists($configFile)) {
+            $this->_config = require($configFile);
+        } else {
+            $this->_config = array();
+        }
 
     }
 
@@ -79,10 +97,10 @@ class wqg_main {
      * @param string $key
      * @param null   $default
      *
-     * @return array|mixed
+     * @return mixed
      */
 
-    public function get_config($key = '',$default = null) {
+    public function getConfig( $key = '', $default = null) {
 
         $key = trim($key);
 
@@ -90,7 +108,7 @@ class wqg_main {
             return $this->_config;
         }
 
-        return wqg_utils::__ARRAY_VALUE($this->_config,$key,$default);
+        return meAnjanWqg_Utils::arrayValue($this->_config,$key,$default);
 
     }
 

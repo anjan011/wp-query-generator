@@ -15,7 +15,7 @@
                 <select size="1" name="tax[relation]">
                     <?php foreach ( $relations as $k => $v ): ?>
                         <option value="<?= $k ?>"
-                                <?php if ($k == wqg_utils::__ARRAY_VALUE($wqgData,'tax/relation')): ?>selected="selected"<?php endif; ?>><?= $v ?></option>
+                                <?php if ($k == meAnjanWqg_Utils::arrayValue($wqgData,'tax/relation')): ?>selected="selected"<?php endif; ?>><?= $v ?></option>
                     <?php endforeach; ?>
                 </select>
 
@@ -37,7 +37,7 @@
         <td>
             <?php
 
-                $res  = wqg_taxonomies::get_taxonomies();
+                $res  = meAnjanWqg_Taxonomies::getTaxonomies();
 
             ?>
         </td>
@@ -45,5 +45,5 @@
 </table>
 
 <script type="text/javascript">
-    var meAnjanPluginsWqgTaxRules = <?= json_encode(wqg_utils::__ARRAY_VALUE($wqgData,'tax/rules'))?>;
+    var meAnjanPluginsWqgTaxRules = <?= json_encode(meAnjanWqg_Utils::arrayValue($wqgData,'tax/rules'))?>;
 </script>

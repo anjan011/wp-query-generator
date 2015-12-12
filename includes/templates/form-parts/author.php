@@ -1,5 +1,5 @@
 <?php
-    $wqg_users = wqg_users::get_users(array(
+    $wqg_users = meAnjanWqg_Users::getUsers(array(
         'fields' => array(
             "u.ID as 'id'",
             "u.user_nicename as 'name'"
@@ -14,11 +14,11 @@
                 <strong>Author ID (#author)</strong>Get entries by selected author id<br />
 
                 <select name="author[id]" id="author_id" title="Author ID" size="1">
-                    <option value="">~ Select ~</option>
+                    <option value=""></option>
                     <?php if ( is_array( $wqg_users ) && count( $wqg_users ) > 0 ): ?>
 
                         <?php foreach ( $wqg_users as $u ): ?>
-                            <option <?= wqg_utils::selected_attr($wqgData,'author/id',$u['id'])?> value="<?= $u['id']?>"><?= $u['name']?></option>
+                            <option <?= meAnjanWqg_Utils::selectedAttr($wqgData,'author/id',$u['id'])?> value="<?= $u['id']?>"><?= $u['name']?></option>
                         <?php endforeach; ?>
 
                     <?php endif; ?>
@@ -33,11 +33,11 @@
                 <strong>Author Name (#author_name)</strong>Get entries by selected author name (using user_nicename)<br />
 
                 <select name="author[name]" id="author_name" title="Author Name" size="1">
-                    <option value="">~ Select ~</option>
+                    <option value=""></option>
                     <?php if ( is_array( $wqg_users ) && count( $wqg_users ) > 0 ): ?>
 
                         <?php foreach ( $wqg_users as $u ): ?>
-                            <option <?= wqg_utils::selected_attr($wqgData,'author/name',$u['name'])?> value="<?= $u['name']?>"><?= $u['name']?></option>
+                            <option <?= meAnjanWqg_Utils::selectedAttr($wqgData,'author/name',$u['name'])?> value="<?= $u['name']?>"><?= $u['name']?></option>
                         <?php endforeach; ?>
 
                     <?php endif; ?>
@@ -56,7 +56,7 @@
                     <?php if ( is_array( $wqg_users ) && count( $wqg_users ) > 0 ): ?>
 
                         <?php foreach ( $wqg_users as $u ): ?>
-                            <option <?= wqg_utils::selected_attr($wqgData,'author/in',$u['id'],true)?> value="<?= $u['id']?>"><?= $u['name']?></option>
+                            <option <?= meAnjanWqg_Utils::selectedAttr($wqgData,'author/in',$u['id'],true)?> value="<?= $u['id']?>"><?= $u['name']?></option>
                         <?php endforeach; ?>
 
                     <?php endif; ?>
@@ -74,7 +74,7 @@
                     <?php if ( is_array( $wqg_users ) && count( $wqg_users ) > 0 ): ?>
 
                         <?php foreach ( $wqg_users as $u ): ?>
-                            <option <?= wqg_utils::selected_attr($wqgData,'author/not_in',$u['id'],true)?> value="<?= $u['id']?>"><?= $u['name']?></option>
+                            <option <?= meAnjanWqg_Utils::selectedAttr($wqgData,'author/not_in',$u['id'],true)?> value="<?= $u['id']?>"><?= $u['name']?></option>
                         <?php endforeach; ?>
 
                     <?php endif; ?>

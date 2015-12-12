@@ -5,9 +5,9 @@
                 <strong>Category ID (#cat)</strong>Get entries associated with selected category id<br />
 
                 <?php
-                    echo wqg_categories::categories_dropdown(array(
+                    echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'empty_value' => array(
-                            'label' => '~ Select ~',
+                            'label' => '',
                             'value' => '',
 
                         ),
@@ -17,7 +17,7 @@
                             'name' => 'category[id]',
                             'id' => 'category_id',
                         ),
-                        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'category/id')
+                        'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/id')
                     ));
                 ?>
             </label>
@@ -30,9 +30,9 @@
                 <strong>Category Name (#category_name)</strong>Get entries associated with selected category name (using slug)<br />
 
                 <?php
-                    echo wqg_categories::categories_dropdown(array(
+                    echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'empty_value' => array(
-                            'label' => '~ Select ~',
+                            'label' => '',
                             'value' => '',
                         ),
                         'label_field' => 'name',
@@ -42,7 +42,7 @@
                             'id' => 'category_name',
 
                         ),
-                        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'category/name')
+                        'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/name')
                     ));
                 ?>
             </label>
@@ -57,7 +57,7 @@
                 <strong>Category Ids (#category__and)</strong>Get entries associated with <b>ALL</b> of the selected category ids<br />
 
                 <?php
-                    echo wqg_categories::categories_dropdown(array(
+                    echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'label_field' => 'name',
                         'value_field' => 'term_id',
                         'attributes' => array(
@@ -66,7 +66,7 @@
                             'multiple' => 'multiple',
                             'size' => 10
                         ),
-                        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'category/and')
+                        'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/and')
                     ));
                 ?>
             </label>
@@ -81,7 +81,7 @@
                 <strong>Category Ids in (#category__in)</strong>Get entries associated with <b>ANY</b> of the selected category ids<br />
 
                 <?php
-                    echo wqg_categories::categories_dropdown(array(
+                    echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'label_field' => 'name',
                         'value_field' => 'term_id',
                         'attributes' => array(
@@ -90,7 +90,7 @@
                             'multiple' => 'multiple',
                             'size' => 10
                         ),
-                        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'category/in')
+                        'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/in')
                     ));
                 ?>
             </label>
@@ -105,7 +105,7 @@
                 <strong>Exclude Categories (#category__not_in)</strong>Get entries <b>NOT</b> associated with any of the selected category ids<br />
 
                 <?php
-                    echo wqg_categories::categories_dropdown(array(
+                    echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'label_field' => 'name',
                         'value_field' => 'term_id',
                         'attributes' => array(
@@ -114,7 +114,7 @@
                             'multiple' => 'multiple',
                             'size' => 10
                         ),
-                        'selected' => wqg_utils::__ARRAY_VALUE($wqgData,'category/not_in')
+                        'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/not_in')
                     ));
                 ?>
             </label>

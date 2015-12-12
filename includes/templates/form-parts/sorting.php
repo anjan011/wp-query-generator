@@ -1,3 +1,18 @@
+<?php
+    $metaKeys = meAnjanWqg_Posts::getAllPostMetaKeys();
+
+    $selectedMetaKey = meAnjanWqg_Utils::arrayValueAsString(
+        $wqgData,
+        'sorting/meta_key',
+        '',
+        'trim'
+    );
+?>
+
+<script type="text/javascript">
+    var meAnjanWqgPostMetaList = <?= json_encode($metaKeys)?>;
+</script>
+
 <table class="form-table">
 
     <tr>
@@ -5,9 +20,9 @@
             <label>
                 <strong>Sort By (#orderby)</strong>Order by field<br/>
                 <?php
-                    $orderByKeys = wqg_posts::getPostOrderByFields();
+                    $orderByKeys = meAnjanWqg_Posts::getPostOrderByFields();
 
-                    $selectedOrderBykeys = wqg_utils::array_value_as_string(
+                    $selectedOrderBykeys = meAnjanWqg_Utils::arrayValueAsString(
                         $wqgData,
                         'sorting/orderby',
                         'date',
@@ -33,7 +48,7 @@
                 <?php
                     $sortDirs = array('asc','desc');
 
-                    $selectedSortDir = wqg_utils::array_value_as_string(
+                    $selectedSortDir = meAnjanWqg_Utils::arrayValueAsString(
                         $wqgData,
                         'sorting/order',
                         'desc',
@@ -62,16 +77,6 @@
         <td>
             <label>
                 <strong>Meta key (#meta_key)</strong>Meta key name<br/>
-                <?php
-                    $metaKeys = wqg_posts::getAllPostMetaKeys();
-
-                    $selectedMetaKey = wqg_utils::array_value_as_string(
-                        $wqgData,
-                        'sorting/meta_key',
-                        '',
-                        'trim'
-                    );
-                ?>
 
                 <select id="<?= $idPrefix?>sorting-meta-key" name="sorting[meta_key]" class="chosen" data-placeholder="Select meta key">
                     <option value=""></option>

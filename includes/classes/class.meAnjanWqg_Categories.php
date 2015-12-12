@@ -6,24 +6,25 @@
      * Date: 9/24/15
      * Time: 6:15 PM
      */
-    class wqg_categories {
+
+    class meAnjanWqg_Categories {
 
         /**
-         * get direct child categories
+         * Gets direct child categories
          *
-         * @param int    $parent_category_id
+         * @param int $parentCategoryId
          *
          * @return array
          */
 
-        public static function get_categories($parent_category_id = 0) {
+        public static function getCategories( $parentCategoryId = 0) {
 
-            $parent_category_id = (int)$parent_category_id;
+            $parentCategoryId = (int)$parentCategoryId;
 
             $taxonomy = 'category';
 
             $args = array(
-                'parent'                   => $parent_category_id,
+                'parent'                   => $parentCategoryId,
                 'orderby'                  => 'name',
                 'order'                    => 'ASC',
                 'hide_empty'               => 0,
@@ -45,11 +46,11 @@
          * @return string
          */
 
-        public static function categories_dropdown($params = array()) {
+        public static function categoriesDropdown( $params = array()) {
 
-            $attributes = wqg_utils::__ARRAY_VALUE($params,'attributes',array());
+            $attributes = meAnjanWqg_Utils::arrayValue($params,'attributes',array());
 
-            $selected = wqg_utils::__ARRAY_VALUE($params,'selected','');
+            $selected = meAnjanWqg_Utils::arrayValue($params,'selected','');
 
 
 
@@ -67,7 +68,7 @@
 
             $html .= '>';
 
-            $empty_value = wqg_utils::__ARRAY_VALUE($params,'empty_value',false);
+            $empty_value = meAnjanWqg_Utils::arrayValue($params,'empty_value',false);
 
             if(is_array($empty_value) && isset($empty_value['label']) && isset($empty_value['value'])) {
 
@@ -75,17 +76,17 @@
 
             }
 
-            $categories = self::get_categories(0);
+            $categories = self::getCategories(0);
 
             if(is_array($categories) && count($categories) > 0) {
 
                 foreach($categories as $c) {
 
-                    $html .= self::generate_category_option(array(
+                    $html .= self::generateCategoryOption(array(
                         'category' => $c,
                         'selected' => $selected,
-                        'label_field' => wqg_utils::__ARRAY_VALUE($params,'label_field','name'),
-                        'value_field' => wqg_utils::__ARRAY_VALUE($params,'value_field','term_id'),
+                        'label_field' => meAnjanWqg_Utils::arrayValue($params,'label_field','name'),
+                        'value_field' => meAnjanWqg_Utils::arrayValue($params,'value_field','term_id'),
                         'indent' => 0
                     ));
 
@@ -107,9 +108,9 @@
          * @return bool|string
          */
 
-        public static function generate_category_option( $params = array()) {
+        public static function generateCategoryOption( $params = array()) {
 
-            $category = wqg_utils::__ARRAY_VALUE($params,'category',false);
+            $category = meAnjanWqg_Utils::arrayValue($params,'category',false);
 
             if(!is_object($category)) {
                 return false;
@@ -117,10 +118,10 @@
 
 
 
-            $label_field = wqg_utils::__ARRAY_VALUE($params,'label_field','name');
-            $value_field = wqg_utils::__ARRAY_VALUE($params,'value_field','term_id');
+            $label_field = meAnjanWqg_Utils::arrayValue($params,'label_field','name');
+            $value_field = meAnjanWqg_Utils::arrayValue($params,'value_field','term_id');
 
-            $indent = (int)wqg_utils::__ARRAY_VALUE($params,'indent',0);
+            $indent = (int)meAnjanWqg_Utils::arrayValue($params,'indent',0);
 
             $label = isset($category->$label_field) ? $category->$label_field : '';
             $value = isset($category->$value_field) ? $category->$value_field : '';
@@ -131,7 +132,7 @@
 
             $selected_attr = '';
 
-            $selected = wqg_utils::__ARRAY_VALUE($params,'selected','');
+            $selected = meAnjanWqg_Utils::arrayValue($params,'selected','');
 
             if(is_array($selected) && in_array($value,$selected)) {
                 $selected_attr = ' selected';
@@ -141,7 +142,7 @@
 
             $html = "<option value='{$value}'{$selected_attr}>{$label}</option>";
 
-            $categories = self::get_categories($category->term_id);
+            $categories = self::getCategories($category->term_id);
 
             /* Child categories */
 
@@ -155,7 +156,7 @@
 
                     $newParam['category'] = $c;
 
-                    $html .= self::generate_category_option($newParam);
+                    $html .= self::generateCategoryOption($newParam);
 
                 }
 

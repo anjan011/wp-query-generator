@@ -6,25 +6,25 @@
      * Date: 11/8/15
      * Time: 9:36 PM
      */
-    class wqg_posts {
+    class meAnjanWqg_Posts {
 
         /**
-         * get posts
+         * Get posts
          *
          * @param array $params
          *
          * @return array
          */
 
-        public static function get_posts( $params = array() ) {
+        public static function getPosts( $params = array() ) {
 
             $params = is_array( $params ) ? $params : array();
 
-            $params[ 'post_type' ] = wqg_utils::array_value_as_array( $params, 'post_type', array( 'post' ) );
-            $params[ 'order' ] = wqg_utils::array_value_as_string( $params, 'order', 'asc', 'trim' );
-            $params[ 'orderby' ] = wqg_utils::array_value_as_string( $params, 'orderby', 'title', 'trim' );
-            $params[ 'nopaging' ] = wqg_utils::__ARRAY_VALUE( $params, 'nopaging', TRUE );
-            $params[ 'post_parent' ] = wqg_utils::array_value_as_int( $params, 'post_parent', 0 );
+            $params[ 'post_type' ] = meAnjanWqg_Utils::arrayValueAsArray( $params, 'post_type', array( 'post' ) );
+            $params[ 'order' ] = meAnjanWqg_Utils::arrayValueAsString( $params, 'order', 'asc', 'trim' );
+            $params[ 'orderby' ] = meAnjanWqg_Utils::arrayValueAsString( $params, 'orderby', 'title', 'trim' );
+            $params[ 'nopaging' ] = meAnjanWqg_Utils::arrayValue( $params, 'nopaging', TRUE );
+            $params[ 'post_parent' ] = meAnjanWqg_Utils::arrayValueAsInt( $params, 'post_parent', 0 );
 
             $q = new WP_Query( $params );
 
@@ -36,9 +36,16 @@
 
         }
 
-        public static function get_posts_minimal(&$posts = array(),$params = array()) {
+        /**
+         * Get post id, title and slug grouped by post type
+         *
+         * @param array $posts
+         * @param array $params
+         */
 
-            $post_types = wqg_utils::array_value_as_array( $params, 'post_type', array( 'post' ) );
+        public static function getPostsMinimal( &$posts = array(), $params = array()) {
+
+            $post_types = meAnjanWqg_Utils::arrayValueAsArray( $params, 'post_type', array( 'post' ) );
 
             foreach($post_types as $ptype) {
 
@@ -50,7 +57,7 @@
 
                 $newParams['post_type'] = array($ptype);
 
-                $foundPosts = self::get_posts($newParams);
+                $foundPosts = self::getPosts($newParams);
 
                 if(!is_array($foundPosts) || count($foundPosts) == 0) {
                     $posts[$ptype] = array();
@@ -80,17 +87,17 @@
          * @return string
          */
 
-        public static function posts_dropdown( $params = array() ) {
+        public static function postsDropdown( $params = array() ) {
 
-            $params[ 'post_type' ] = wqg_utils::array_value_as_array( $params, 'post_type', array( 'post' ) );
+            $params[ 'post_type' ] = meAnjanWqg_Utils::arrayValueAsArray( $params, 'post_type', array( 'post' ) );
 
             if ( in_array( 'any', $params[ 'post_type' ] ) ) {
                 $params[ 'post_type' ] = array( 'any' );
             }
 
-            $attributes = wqg_utils::__ARRAY_VALUE( $params, 'attributes', array() );
+            $attributes = meAnjanWqg_Utils::arrayValue( $params, 'attributes', array() );
 
-            $selected = wqg_utils::__ARRAY_VALUE( $params, 'selected', '' );
+            $selected = meAnjanWqg_Utils::arrayValue( $params, 'selected', '' );
 
             $options_only = isset($params[ 'options_only' ]) && $params[ 'options_only' ];
 
@@ -114,7 +121,7 @@
                 $html .= '>';
             }
 
-            $empty_value = wqg_utils::__ARRAY_VALUE( $params, 'empty_value', FALSE );
+            $empty_value = meAnjanWqg_Utils::arrayValue( $params, 'empty_value', FALSE );
 
             if ( is_array( $empty_value ) && isset($empty_value[ 'label' ]) && isset($empty_value[ 'value' ]) ) {
 
@@ -128,19 +135,19 @@
 
                 $params[ 'post_type' ] = array( $post_type );
 
-                $posts = self::get_posts( $params );
+                $posts = self::getPosts( $params );
 
                 if ( is_array( $posts ) && count( $posts ) > 0 ) {
 
                     foreach ( $posts as $p ) {
 
-                        $html .= self::generate_post_option( array(
+                        $html .= self::generatePostOption( array(
                             'post_type'   => array( $post_type ),
                             'post'        => $p,
                             'selected'    => $selected,
-                            'label_field' => wqg_utils::__ARRAY_VALUE( $params, 'label_field', 'post_title' ),
-                            'label_field_extra' => wqg_utils::__ARRAY_VALUE( $params, 'label_field_extra', '' ),
-                            'value_field' => wqg_utils::__ARRAY_VALUE( $params, 'value_field', 'ID' ),
+                            'label_field' => meAnjanWqg_Utils::arrayValue( $params, 'label_field', 'post_title' ),
+                            'label_field_extra' => meAnjanWqg_Utils::arrayValue( $params, 'label_field_extra', '' ),
+                            'value_field' => meAnjanWqg_Utils::arrayValue( $params, 'value_field', 'ID' ),
                             'indent'      => 0,
                         ) );
 
@@ -170,20 +177,20 @@
          * @return bool|string
          */
 
-        public static function generate_post_option( $params = array() ) {
+        public static function generatePostOption( $params = array() ) {
 
-            $post = wqg_utils::__ARRAY_VALUE( $params, 'post', FALSE );
+            $post = meAnjanWqg_Utils::arrayValue( $params, 'post', FALSE );
 
             if ( !is_object( $post ) || !($post instanceof WP_Post) ) {
                 return FALSE;
             }
 
 
-            $label_field = wqg_utils::__ARRAY_VALUE( $params, 'label_field', 'post_title' );
-            $label_field_extra = wqg_utils::__ARRAY_VALUE( $params, 'label_field_extra', '' );
-            $value_field = wqg_utils::__ARRAY_VALUE( $params, 'value_field', 'ID' );
+            $label_field = meAnjanWqg_Utils::arrayValue( $params, 'label_field', 'post_title' );
+            $label_field_extra = meAnjanWqg_Utils::arrayValue( $params, 'label_field_extra', '' );
+            $value_field = meAnjanWqg_Utils::arrayValue( $params, 'value_field', 'ID' );
 
-            $indent = (int) wqg_utils::__ARRAY_VALUE( $params, 'indent', 0 );
+            $indent = (int) meAnjanWqg_Utils::arrayValue( $params, 'indent', 0 );
 
             $label = isset($post->$label_field) ? $post->$label_field : '';
             $value = isset($post->$value_field) ? $post->$value_field : '';
@@ -200,7 +207,7 @@
 
             $selected_attr = '';
 
-            $selected = wqg_utils::__ARRAY_VALUE( $params, 'selected', '' );
+            $selected = meAnjanWqg_Utils::arrayValue( $params, 'selected', '' );
 
             if ( is_array( $selected ) && in_array( $value, $selected ) ) {
                 $selected_attr = ' selected';
@@ -213,7 +220,7 @@
 
             $params[ 'post_parent' ] = $post->ID;
 
-            $child_posts = self::get_posts( $params );
+            $child_posts = self::getPosts( $params );
 
             /* Child categories */
 
@@ -227,7 +234,7 @@
 
                     $newParam[ 'post' ] = $p;
 
-                    $html .= self::generate_post_option( $newParam );
+                    $html .= self::generatePostOption( $newParam );
 
                 }
 
@@ -260,20 +267,20 @@
 
             );
 
-            if(wqg_utils::is_min_wp_version('2.8')) {
+            if(meAnjanWqg_Utils::isMinWpVersion('2.8')) {
                 $keys[] = 'none';
                 $keys[] = 'meta_value_num';
             }
 
-            if(wqg_utils::is_min_wp_version('2.9')) {
+            if(meAnjanWqg_Utils::isMinWpVersion('2.9')) {
                 $keys[] = 'comment_count';
             }
 
-            if(wqg_utils::is_min_wp_version('3.5')) {
+            if(meAnjanWqg_Utils::isMinWpVersion('3.5')) {
                 $keys[] = 'post__in';
             }
 
-            if(wqg_utils::is_min_wp_version('4.0')) {
+            if(meAnjanWqg_Utils::isMinWpVersion('4.0')) {
                 $keys[] = 'type';
             }
 
