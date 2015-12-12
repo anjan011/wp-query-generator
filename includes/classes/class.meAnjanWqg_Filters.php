@@ -31,7 +31,7 @@
         public function __filter_AddActionLinks( $links ) {
 
             $mylinks = array(
-                '<a href="'.menu_page_url( self::GENERATOR_PAGE_SLUG, FALSE ).'">Generate Query Code</a>',
+                '<a href="'.menu_page_url( meAnjanWqg_Actions::GENERATOR_PAGE_SLUG, FALSE ).'">Generate Query Code</a>',
             );
 
             return array_merge( $mylinks, $links );
