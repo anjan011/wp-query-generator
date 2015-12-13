@@ -23,13 +23,64 @@
         Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     */
 
-    /* plugin base file path */
+    /* Plugin nice name */
 
-    define ( 'ME_ANJAN_PLUGIN_WQG_BASE_FILE_PATH', plugin_basename ( __FILE__ ) );
+    define('ME_ANJAN_PLUGIN_WQG_NICE_NAME','WP_Query Generator');
+
+    /* Minimum PHP version required */
+
+    define('ME_ANJAN_PLUGIN_WQG_MIN_PHP_VERSION','5.9');
 
     /* text domain */
 
     define ( 'ME_ANJAN_PLUGIN_WQG_TEXT_DOMAIN', 'wp_query_generator' );
+
+    /* On activation check for required php version */
+
+    register_activation_hook( __FILE__, 'meAnjanWqg_ActivationHook' );
+
+    function meAnjanWqg_ActivationHook() {
+
+        if(!version_compare(PHP_VERSION,ME_ANJAN_PLUGIN_WQG_MIN_PHP_VERSION,'>=')) {
+
+            wp_die(( ME_ANJAN_PLUGIN_WQG_NICE_NAME.' requires PHP version <strong>'.ME_ANJAN_PLUGIN_WQG_MIN_PHP_VERSION.'</strong> or higher, your PHP version is <strong>'.PHP_VERSION.'</strong>!' ));
+
+        }
+
+    }
+
+    /* If PHP version does't match, Deactivate plugin! Practically this should never happen, right? */
+
+    if(!version_compare(PHP_VERSION,ME_ANJAN_PLUGIN_WQG_MIN_PHP_VERSION,'>=')) {
+
+        add_action( 'admin_notices', 'meAnjanWqg_DisabledNotice' );
+
+        function meAnjanWqg_DisabledNotice() {
+
+            echo '<div class="error"><p>' . esc_html__( ME_ANJAN_PLUGIN_WQG_NICE_NAME.' is now deactivated, because it requires PHP version '.ME_ANJAN_PLUGIN_WQG_MIN_PHP_VERSION.' or higher, but you PHP version is '.PHP_VERSION.'!', 'my-plugin' ) . '</p></div>';
+
+        }
+
+        /* Was plugin already activated? deactivate it! */
+
+        add_action( 'admin_init', 'meAnjanWqg_DeactivatePlugin' );
+
+        function meAnjanWqg_DeactivatePlugin() {
+
+            deactivate_plugins(plugin_basename(__FILE__));
+
+        }
+
+        return;
+
+    }
+
+
+    /* plugin base file path */
+
+    define ( 'ME_ANJAN_PLUGIN_WQG_BASE_FILE_PATH', plugin_basename ( __FILE__ ) );
+
+
 
     /* Plugin dir root */
 

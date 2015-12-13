@@ -16,6 +16,7 @@
                         'attributes' => array(
                             'name' => 'category[id]',
                             'id' => 'category_id',
+                            'data-placeholder' => ' ',
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/id')
                     ));
@@ -40,6 +41,7 @@
                         'attributes' => array(
                             'name' => 'category[name]',
                             'id' => 'category_name',
+                            'data-placeholder' => ' '
 
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/name')
@@ -64,7 +66,8 @@
                             'name' => 'category[and][]',
                             'id' => 'category_and',
                             'multiple' => 'multiple',
-                            'size' => 10
+                            'size' => 10,
+                            'data-placeholder' => 'Select one or more categories'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/and')
                     ));
