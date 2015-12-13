@@ -29,7 +29,7 @@
 
     /* Minimum PHP version required */
 
-    define('ME_ANJAN_PLUGIN_WQG_MIN_PHP_VERSION','5.9');
+    define('ME_ANJAN_PLUGIN_WQG_MIN_PHP_VERSION','5.4');
 
     /* text domain */
 
