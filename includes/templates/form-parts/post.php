@@ -127,7 +127,7 @@
                             'name'  => 'post[post_slug]',
                             'id'    => $idPrefix.'post-slug',
                             'class' => 'chosen',
-                            'data-placeholder' => 'Select one or more posts'
+                            'data-placeholder' => ' '
                         ),
                         'selected'    => meAnjanWqg_Utils::arrayValue( $wqgData, 'post/post_slug' ),
                     ) );

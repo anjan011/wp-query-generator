@@ -8,7 +8,7 @@
             <label>
                 <strong>Meta Key (#meta_key)</strong>Meta key name<br/>
 
-                <select size="1" name="meta[key]">
+                <select size="1" name="meta[key]" data-placeholder=" ">
                     <option></option>
                     <?php foreach ( meAnjanWqg_Posts::getAllPostMetaKeys() as $metaKey ): ?>
                     <option value="<?= $metaKey?>" <?php if ($metaKey == meAnjanWqg_Utils::arrayValue($wqgData,'meta/key')): ?>selected<?php endif; ?>><?= $metaKey?></option>

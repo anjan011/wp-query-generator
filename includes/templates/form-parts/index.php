@@ -17,7 +17,7 @@
     $tabs = array(
         array(
             'id'     => $idPrefix.'tab-author',
-            'label'  => 'Auhtor',
+            'label'  => 'Author',
             'slug'   => 'author',
             'active' => TRUE,
         ),

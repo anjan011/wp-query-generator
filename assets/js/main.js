@@ -1015,7 +1015,9 @@ _.mixin ({
         html.push('<label>');
         html.push('<span>Meta Key</span>');
 
-        html.push('<select name="meta_query[queries][' + blockId + '][key]">');
+        html.push('<select name="meta_query[queries][' + blockId + '][key]" data-placeholder=" ">');
+
+        html.push('<option></option>');
 
         if(_.has(window,'meAnjanWqgPostMetaList') && _.isArray(window.meAnjanWqgPostMetaList)) {
 

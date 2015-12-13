@@ -48,9 +48,9 @@
 
         html.push('<span>Taxonomy:</span>');
 
-        html.push('<select name="tax[rules][' + key + '][name]" size="1" class="me-anjan-wqg-taxonomies">');
+        html.push('<select data-placeholder=" " name="tax[rules][' + key + '][name]" size="1" class="me-anjan-wqg-taxonomies">');
 
-        html.push('<option value="">~ Select ~</option>');
+        html.push('<option value=""></option>');
 
         if (_.has(pluginData, 'taxonomies') && _.isObject(pluginData.taxonomies)) {
 

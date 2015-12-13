@@ -216,7 +216,7 @@
                 $selected_attr = ' selected';
             }
 
-            $html = "<option value='{$value}'{$selected_attr}>{$label}".(!empty($label_extra) ? " ({$label_extra})":'')."</option>";
+            $html = "<option value='{$value}'{$selected_attr}>{$label}".(!empty($label_extra) ? " [{$label_extra}]":'')."</option>";
 
             $params[ 'post_parent' ] = $post->ID;
 

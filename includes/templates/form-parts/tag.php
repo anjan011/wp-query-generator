@@ -7,15 +7,17 @@
                 <?php
                     echo meAnjanWqg_Tags::tagsDropdown(array(
                         'empty_value' => array(
-                            'label' => '~ Select ~',
+                            'label' => '',
                             'value' => '',
 
                         ),
                         'label_field' => 'name',
+                        'label_field_extra' => 'slug',
                         'value_field' => 'slug',
                         'attributes' => array(
                             'name' => 'tag[slug]',
                             'id' => 'tag_slug',
+                            'data-placeholder' => ' '
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'tag/slug')
                     ));
@@ -32,11 +34,13 @@
                 <?php
                     echo meAnjanWqg_Tags::tagsDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'slug',
                         'value_field' => 'slug',
                         'attributes' => array(
                             'name' => 'tag[slug_and][]',
                             'id' => 'tag_slug_and',
-                            'multiple' => 'multiple'
+                            'multiple' => 'multiple',
+                            'data-placeholder' => 'Select one or more tag slugs'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'tag/slug_and')
                     ));
@@ -53,11 +57,13 @@
                 <?php
                     echo meAnjanWqg_Tags::tagsDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'slug',
                         'value_field' => 'slug',
                         'attributes' => array(
                             'name' => 'tag[slug_in][]',
                             'id' => 'tag_slug_in',
-                            'multiple' => 'multiple'
+                            'multiple' => 'multiple',
+                            'data-placeholder' => 'Select one or more tag slugs'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'tag/slug_in')
                     ));
@@ -74,15 +80,17 @@
                 <?php
                     echo meAnjanWqg_Tags::tagsDropdown(array(
                         'empty_value' => array(
-                            'label' => '~ Select ~',
+                            'label' => '',
                             'value' => '',
 
                         ),
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'tag[id]',
                             'id' => 'tag_id',
+                            'data-placeholder' => ' '
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'tag/id')
                     ));
@@ -99,11 +107,13 @@
                 <?php
                     echo meAnjanWqg_Tags::tagsDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'tag[and][]',
                             'id' => 'tag_and',
-                            'multiple' => 'multiple'
+                            'multiple' => 'multiple',
+                            'data-placeholder' => 'Select one or more tag id'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'tag/and')
                     ));
@@ -120,11 +130,13 @@
                 <?php
                     echo meAnjanWqg_Tags::tagsDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'tag[in][]',
                             'id' => 'tag_in',
-                            'multiple' => 'multiple'
+                            'multiple' => 'multiple',
+                            'data-placeholder' => 'Select one or more tag id'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'tag/in')
                     ));
@@ -141,11 +153,13 @@
                 <?php
                     echo meAnjanWqg_Tags::tagsDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'tag[not_in][]',
                             'id' => 'tag_not_in',
-                            'multiple' => 'multiple'
+                            'multiple' => 'multiple',
+                            'data-placeholder' => 'Select one or more tag id'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'tag/not_in')
                     ));

@@ -12,6 +12,7 @@
 
                         ),
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'category[id]',
@@ -37,6 +38,7 @@
                             'value' => '',
                         ),
                         'label_field' => 'name',
+                        'label_field_extra' => 'slug',
                         'value_field' => 'slug',
                         'attributes' => array(
                             'name' => 'category[name]',
@@ -61,6 +63,7 @@
                 <?php
                     echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'category[and][]',
@@ -86,12 +89,14 @@
                 <?php
                     echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'category[in][]',
                             'id' => 'category_in',
                             'multiple' => 'multiple',
-                            'size' => 10
+                            'size' => 10,
+                            'data-placeholder' => 'Select one or more categories'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/in')
                     ));
@@ -110,12 +115,14 @@
                 <?php
                     echo meAnjanWqg_Categories::categoriesDropdown(array(
                         'label_field' => 'name',
+                        'label_field_extra' => 'term_id',
                         'value_field' => 'term_id',
                         'attributes' => array(
                             'name' => 'category[not_in][]',
                             'id' => 'category_not_in',
                             'multiple' => 'multiple',
-                            'size' => 10
+                            'size' => 10,
+                            'data-placeholder' => 'Select one or more categories'
                         ),
                         'selected' => meAnjanWqg_Utils::arrayValue($wqgData,'category/not_in')
                     ));

@@ -83,6 +83,7 @@
                         'tag' => $t,
                         'selected' => $selected,
                         'label_field' => meAnjanWqg_Utils::arrayValue($params,'label_field','name'),
+                        'label_field_extra' => meAnjanWqg_Utils::arrayValue($params,'label_field_extra',''),
                         'value_field' => meAnjanWqg_Utils::arrayValue($params,'value_field','term_id'),
                         'indent' => 0
                     ));
@@ -116,6 +117,7 @@
 
 
             $label_field = meAnjanWqg_Utils::arrayValue($params,'label_field','name');
+            $label_field_extra = meAnjanWqg_Utils::arrayValue($params,'label_field_extra','');
             $value_field = meAnjanWqg_Utils::arrayValue($params,'value_field','term_id');
 
             $indent = (int)meAnjanWqg_Utils::arrayValue($params,'indent',0);
@@ -124,6 +126,16 @@
             $value = isset($tag->$value_field) ? $tag->$value_field : '';
 
             $label = str_repeat('-',$indent).$label;
+
+            if($label_field_extra != '') {
+
+                $extraLabelValue = isset($tag->$label_field_extra) ? trim($tag->$label_field_extra) : '';
+
+                if($extraLabelValue != '') {
+                    $label .= " [{$extraLabelValue}]";
+                }
+
+            }
 
             /* Selected attr */
 

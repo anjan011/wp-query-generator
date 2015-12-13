@@ -86,6 +86,7 @@
                         'category' => $c,
                         'selected' => $selected,
                         'label_field' => meAnjanWqg_Utils::arrayValue($params,'label_field','name'),
+                        'label_field_extra' => meAnjanWqg_Utils::arrayValue($params,'label_field_extra',''),
                         'value_field' => meAnjanWqg_Utils::arrayValue($params,'value_field','term_id'),
                         'indent' => 0
                     ));
@@ -119,11 +120,23 @@
 
 
             $label_field = meAnjanWqg_Utils::arrayValue($params,'label_field','name');
+            $label_field_extra = meAnjanWqg_Utils::arrayValue($params,'label_field_extra','');
             $value_field = meAnjanWqg_Utils::arrayValue($params,'value_field','term_id');
 
             $indent = (int)meAnjanWqg_Utils::arrayValue($params,'indent',0);
 
             $label = isset($category->$label_field) ? $category->$label_field : '';
+
+            if($label_field_extra != '') {
+
+                $extraLabelValue = isset($category->$label_field_extra) ? trim($category->$label_field_extra) : '';
+
+                if($extraLabelValue != '') {
+                    $label .= " [{$extraLabelValue}]";
+                }
+
+            }
+
             $value = isset($category->$value_field) ? $category->$value_field : '';
 
             $label = str_repeat('-',$indent).$label;
