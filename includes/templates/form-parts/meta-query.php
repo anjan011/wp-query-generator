@@ -37,7 +37,7 @@
 
             <div style="clear: both;"></div>
 
-            <input type="button" id="me-anjan-wqg-add-meta-query" value="Add Meta Query"/>
+            <input type="button" id="me-anjan-wqg-add-meta-query" value="Add Meta Query" class="button"/>
         </td>
     </tr>
 

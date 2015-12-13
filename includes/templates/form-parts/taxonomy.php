@@ -29,7 +29,7 @@
 
             <div style="clear: both;"></div>
 
-            <input type="button" id="me-anjan-wqg-add-taxonomy" value="Add Taxonomy" />
+            <input type="button" id="me-anjan-wqg-add-taxonomy" value="Add Taxonomy" class="button" />
         </td>
     </tr>
 

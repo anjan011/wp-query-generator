@@ -58,7 +58,7 @@
       border-right: solid 1px #CECACA;
 
       a {
-        background-color: #f1f1f1;
+
         display: block;
         padding: 5px 10px;
         color: #000;
@@ -69,6 +69,7 @@
 
       &.active {
 
+        background-color: #f1f1f1;
         position: relative;
         z-index: 3;
 
@@ -313,7 +314,7 @@
 
       @media screen and (min-width: 1024px) {
         width: 31.3333333%;
-        margin: 1%;
+        margin: 1% 2% 1% 0;
       }
 
       label {
@@ -452,7 +453,7 @@
 
   @media screen and (min-width: 1024px) {
     width: 18%;
-    margin: 1%;
+    margin: 1% 2% 1% 0;
   }
 
   label {
@@ -512,7 +513,7 @@
 
   @media screen and (min-width: 1024px) {
     width: 23%;
-    margin: 1%;
+    margin: 1% 2% 1% 0%;
   }
 
   label {

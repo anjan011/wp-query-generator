@@ -44,9 +44,11 @@
 
     <tr>
         <td>
-            <input type="button" id="<?= $idPrefix?>add-date-criteria-box" value="Add date criteria" />
+
 
             <div id="<?= $idPrefix?>date-criteria-container" class="clearfix"></div>
+
+            <input type="button" id="<?= $idPrefix?>add-date-criteria-box" value="Add date criteria" class="button" />
 
         </td>
     </tr>
